@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('web.admin.users.title') }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.table-wrapper {overflow-x:auto;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-md-2 sidebar d-none d-md-block">
+            <ul class="nav flex-column pt-4">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">{{ t('web.admin.nav.back') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.specs_page') }}">{{ t('web.admin.nav.specs') }}</a></li>
+                {% if current_user.role == 'admin' %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.logs_page') }}">{{ t('web.admin.nav.logs') }}</a></li>
+                {% endif %}
+            </ul>
+        </aside>
+        <section class="col-md-10 p-4">
+            <h2 class="mb-4">{{ t('web.admin.users.title') }}</h2>
+            <div class="table-wrapper">
+                <table class="table table-bordered align-middle" id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>{{ t('web.admin.requests.colId') }}</th>
+                            <th>{{ t('web.admin.users.colName') }}</th>
+                            <th>{{ t('web.admin.users.colEmail') }}</th>
+                            <th>{{ t('web.admin.users.colPhone') }}</th>
+                            <th>{{ t('web.admin.users.colRole') }}</th>
+                            <th>{{ t('web.admin.users.colActions') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="application/json" id="admin-users-i18n">
+{{ {
+  'delete': t('web.admin.users.delete'),
+  'loadFailed': t('web.admin.users.loadFailed'),
+  'confirmDelete': t('web.admin.users.confirmDelete'),
+  'deleteFailed': t('web.admin.users.deleteFailed'),
+  'unexpected': t('web.admin.users.unexpected'),
+  'locale': locale
+}|tojson }}
+</script>
+<script>
+const ADM_USR = JSON.parse(document.getElementById('admin-users-i18n').textContent);
+function adminDisplayUserName(combined) {
+    if (combined == null || combined === '') return '';
+    const lang = ADM_USR.locale || 'en';
+    const s = String(combined).trim();
+    if (!s.includes('/')) return s;
+    const i = s.indexOf('/');
+    const ar = s.slice(0, i).trim();
+    const en = s.slice(i + 1).trim();
+    if (lang === 'en') return en || ar;
+    return ar || en;
+}
+async function loadUsers() {
+    try {
+        const res = await fetch('/admin/api/users');
+        const users = await res.json();
+        const tbody = document.querySelector('#usersTable tbody');
+        tbody.innerHTML = '';
+        users.forEach(u => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${u.id}</td><td>${adminDisplayUserName(u.full_name)}</td><td>${u.email}</td><td>${u.phone}</td><td>${u.role}</td><td><button class='btn btn-sm btn-danger' onclick='deleteUser(${u.id})'>${ADM_USR.delete}</button></td>`;
+            tbody.appendChild(tr);
+        });
+    } catch (err) {
+        console.error(err);
+        showAppAlert(ADM_USR.loadFailed);
+    }
+}
+
+async function deleteUser(id) {
+    if (!(await showAppConfirm(ADM_USR.confirmDelete))) return;
+    try {
+        const res = await fetch(`/admin/api/users/${id}`, {method: 'DELETE'});
+        if (res.ok) {
+            loadUsers();
+        } else {
+            const data = await res.json();
+            await showAppAlert(data.error || ADM_USR.deleteFailed);
+        }
+    } catch (err) {
+        console.error(err);
+        await showAppAlert(ADM_USR.unexpected);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadUsers);
+</script>
+{% endblock %}

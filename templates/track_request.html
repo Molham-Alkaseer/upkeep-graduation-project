@@ -1,0 +1,732 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t('web.trackRequest.pageTitle', id=request.request_id) }}{% endblock %}
+
+{% block extra_css %}
+{% if can_show_exact_map or can_open_area_maps %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+    #trackServiceLocationMap.service-location-map {
+        height: 260px;
+        width: 100%;
+        border-radius: 0.375rem;
+        border: 1px solid #dee2e6;
+        z-index: 0;
+    }
+    #trackServiceLocationMap.service-location-map.leaflet-container {
+        font: inherit;
+    }
+</style>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <!-- Request Details -->
+        <div class="card mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.trackRequest.detailHeading', id=request.request_id) }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-2">
+                            <strong>{{ t('web.trackRequest.serviceType') }}</strong><br>
+                            {% if request.service %}
+                            {{ service_label(request.service) }}{% if request.service.name_en and request.service.name_ar %} / {% if locale == 'en' %}{{ request.service.name_ar }}{% else %}{{ request.service.name_en }}{% endif %}{% endif %}
+                            {% else %}—{% endif %}
+                        </p>
+                        <p class="mb-2">
+                            <strong>{{ t('web.trackRequest.createdAt') }}</strong><br>
+                            {{ request.created_at.strftime('%Y-%m-%d %H:%M') }}
+                        </p>
+                        {% if request.completed_at %}
+                        <p class="mb-2">
+                            <strong>{{ t('web.trackRequest.completedAt') }}</strong><br>
+                            {{ request.completed_at.strftime('%Y-%m-%d %H:%M') }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-2">
+                            <strong>{{ t('web.trackRequest.requestStatus') }}</strong><br>
+                            {% set status_classes = {
+                                'pending': 'bg-warning',
+                                'assigned': 'bg-info',
+                                'in_progress': 'bg-primary',
+                                'completed': 'bg-success',
+                                'cancelled': 'bg-danger'
+                            } %}
+                            <span class="badge {{ status_classes[request.status] }}">
+                                {{ t('web.status.request.' ~ request.status) }}
+                            </span>
+                        </p>
+                        <p class="mb-2">
+                            <strong>{{ t('web.trackRequest.paymentStatus') }}</strong><br>
+                            {% set payment_classes = {
+                                'pending': 'bg-warning',
+                                'processing': 'bg-info',
+                                'completed': 'bg-success',
+                                'refunded': 'bg-danger'
+                            } %}
+                            <span class="badge {{ payment_classes[request.payment_status] }}">
+                                {{ t('web.status.payment.' ~ request.payment_status) }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <h6 class="mb-3">{{ t('web.trackRequest.serviceLocation') }}</h6>
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-2 mb-md-0">
+                        <p class="small text-muted mb-1">{{ t('web.trackRequest.city') }}</p>
+                        <p class="mb-0">{{ request.city or '—' }}</p>
+                    </div>
+                    <div class="col-md-4 mb-2 mb-md-0">
+                        <p class="small text-muted mb-1">{{ t('web.trackRequest.neighborhood') }}</p>
+                        <p class="mb-0">{{ request.district or '—' }}</p>
+                    </div>
+                    {% if not location_redacted %}
+                    <div class="col-md-4">
+                        <p class="small text-muted mb-1">{{ t('web.trackRequest.streetAddress') }}</p>
+                        <p class="mb-0">{{ request.address or '—' }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if location_redacted %}
+                <p class="small text-muted mb-2">{{ t('web.trackRequest.addressHiddenPending') }}</p>
+                {% endif %}
+                {% if distance_km is not none %}
+                <p class="small fw-semibold text-primary mb-2">{{ t('web.trackRequest.distanceAway', km=distance_km) }}</p>
+                {% endif %}
+                {% if can_show_exact_map %}
+                <button type="button" class="btn btn-outline-primary btn-sm mb-2" id="trackShowMapBtn" aria-expanded="false" aria-controls="trackMapPanel">
+                    <i class="fas fa-map-marked-alt me-1"></i>
+                    {{ t('web.trackRequest.showOnMap') }}
+                </button>
+                <div id="trackMapPanel" class="collapse mb-3">
+                    <div id="trackServiceLocationMap" class="service-location-map" role="application" aria-label="{{ t('web.trackRequest.mapPreviewLabel') }}"></div>
+                    <a href="https://www.google.com/maps/search/?api=1&amp;query={{ map_lat }},{{ map_lng }}" target="_blank" rel="noopener noreferrer" class="btn btn-link btn-sm ps-0 mt-2">
+                        {{ t('web.trackRequest.openInMaps') }}
+                    </a>
+                </div>
+                {% elif can_open_area_maps %}
+                <a href="https://www.google.com/maps/search/?api=1&amp;query={{ ((request.city or '') ~ ' ' ~ (request.district or ''))|trim|urlencode }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary btn-sm mb-3">
+                    <i class="fas fa-map me-1"></i>
+                    {{ t('web.trackRequest.openAreaInMaps') }}
+                </a>
+                {% endif %}
+
+                <hr>
+
+                <h6 class="mb-3">{{ t('web.trackRequest.problemDescription') }}</h6>
+                <p class="mb-4">{{ request.description }}</p>
+
+                {% if request.attachment_path and request.attachment_kind %}
+                <h6 class="mb-3">{{ t('web.trackRequest.attachmentHeading') }}</h6>
+                <div class="mb-4">
+                    {% if request.attachment_kind == 'image' %}
+                    <img src="{{ url_for('static', filename=request.attachment_path) }}"
+                         class="img-fluid rounded border"
+                         alt="{{ t('web.trackRequest.attachmentAlt') }}"
+                         style="max-height: 420px; object-fit: contain;">
+                    {% elif request.attachment_kind == 'video' %}
+                    <video class="w-100 rounded border" controls playsinline style="max-height: 420px;"
+                           src="{{ url_for('static', filename=request.attachment_path) }}">
+                    </video>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                {% if request.technician %}
+                <hr>
+                <h6 class="mb-3">{{ t('web.trackRequest.technicianInfo') }}</h6>
+                <a href="{{ url_for('request_public_profile', request_id=request.request_id, user_id=request.technician.user_id) }}"
+                   class="d-flex align-items-center text-decoration-none text-reset">
+                    <div class="flex-shrink-0 me-3">
+                        {% if request.technician.profile_image %}
+                        <img src="{{ url_for('static', filename=request.technician.profile_image) }}"
+                             alt=""
+                             class="rounded-circle border"
+                             width="48" height="48"
+                             style="object-fit: cover;">
+                        {% else %}
+                        <span class="text-secondary d-inline-flex align-items-center justify-content-center" aria-hidden="true" style="font-size:48px;line-height:1;">
+                            <i class="fas fa-user-circle"></i>
+                        </span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h6 class="mb-1">{{ user_label(request.technician) }}</h6>
+                        <p class="mb-0 text-muted">
+                            <i class="fas fa-phone me-1"></i>
+                            {{ request.technician.phone }}
+                        </p>
+                        {% if request.technician.received_ratings %}
+                        {% set avg = (request.technician.received_ratings|map(attribute='stars')|sum) / (request.technician.received_ratings|length) %}
+                        <p class="mb-0 text-warning">
+                            <i class="fas fa-star me-1"></i>
+                            {{ '%.2f'|format(avg) }} / 5
+                        </p>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Request Timeline -->
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.trackRequest.timelineHeading') }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="timeline">
+                    {% if timeline_entries %}
+                        {% for entry in timeline_entries %}
+                        {% set marker = 'bg-info' %}
+                        {% if entry.status == 'pending' %}
+                            {% set marker = 'bg-warning' %}
+                        {% elif entry.status == 'in_progress' %}
+                            {% set marker = 'bg-primary' %}
+                        {% elif entry.status == 'completed' %}
+                            {% set marker = 'bg-success' %}
+                        {% elif entry.status == 'cancelled' %}
+                            {% set marker = 'bg-danger' %}
+                        {% endif %}
+                        <div class="timeline-item">
+                            <div class="timeline-marker {{ marker }}"></div>
+                            <div class="timeline-content">
+                                <h6 class="mb-1">{{ timeline_entry_text(entry) }}</h6>
+                                <p class="mb-0 text-muted">{{ entry.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="timeline-item">
+                            <div class="timeline-marker bg-success"></div>
+                            <div class="timeline-content">
+                                <h6 class="mb-1">{{ t('web.trackRequest.timelineCreated') }}</h6>
+                                <p class="mb-0 text-muted">{{ request.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        {% if current_user.role == 'technician' and can_submit_offer %}
+        <div class="card mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.trackRequest.techOfferCard') }}</h5>
+            </div>
+            <div class="card-body">
+                {% if my_offer %}
+                <div class="alert alert-light border mb-3">
+                    <p class="mb-1"><strong>{{ t('web.trackRequest.yourCurrentOffer') }}</strong> {{ my_offer.total_amount }} {{ t('web.currencySuffix') }} ({{ t('web.trackRequest.inclTax') }})</p>
+                    <p class="mb-0 small text-muted">
+                        {{ t('web.trackRequest.offerState') }}
+                        {% if my_offer.status in ['pending', 'accepted', 'rejected'] %}
+                        {{ t('labels.offerStatus.' ~ my_offer.status) }}
+                        {% else %}
+                        {{ my_offer.status }}
+                        {% endif %}
+                    </p>
+                </div>
+                {% endif %}
+                <form id="techOfferForm" onsubmit="return submitTechOffer(event)">
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.techDashboard.offerAmountLabel') }}</label>
+                        <input type="number" class="form-control" id="techOfferAmount" min="1" step="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.techDashboard.offerNoteLabel') }}</label>
+                        <textarea class="form-control" id="techOfferNote" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fas fa-paper-plane me-1"></i>
+                        {% if my_offer %}{{ t('web.trackRequest.updateOffer') }}{% else %}{{ t('web.trackRequest.sendOfferBtn') }}{% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if current_user.role == 'customer' %}
+        <div class="card mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.trackRequest.customerOffersHeading') }}</h5>
+            </div>
+            <div class="card-body">
+                {% if offers %}
+                    {% for offer in offers %}
+                    <div class="border rounded p-3 mb-3">
+                        <a href="{{ url_for('request_public_profile', request_id=request.request_id, user_id=offer.technician.user_id) }}"
+                           class="d-flex align-items-center gap-2 text-decoration-none text-dark mb-2">
+                            {% if offer.technician.profile_image %}
+                            <img src="{{ url_for('static', filename=offer.technician.profile_image) }}"
+                                 alt=""
+                                 class="rounded-circle border flex-shrink-0"
+                                 width="40" height="40"
+                                 style="object-fit: cover;">
+                            {% else %}
+                            <span class="text-secondary flex-shrink-0 d-inline-flex align-items-center justify-content-center" aria-hidden="true" style="font-size:40px;line-height:1;">
+                                <i class="fas fa-user-circle"></i>
+                            </span>
+                            {% endif %}
+                            <h6 class="mb-0">{{ user_label(offer.technician) }}</h6>
+                        </a>
+                        <p class="mb-1"><strong>{{ t('web.trackRequest.priceBeforeTax') }}</strong> {{ offer.amount }} {{ t('web.currencySuffix') }}</p>
+                        <p class="mb-1"><strong>{{ t('web.trackRequest.taxLine', rate=offer.tax_rate) }}</strong> {{ offer.tax_amount }} {{ t('web.currencySuffix') }}</p>
+                        <p class="mb-1"><strong>{{ t('web.trackRequest.totalLine') }}</strong> {{ offer.total_amount }} {{ t('web.currencySuffix') }}</p>
+                        <p class="mb-2">
+                            <strong>{{ t('web.trackRequest.offerStatusLabel') }}</strong>
+                            {% if offer.status == 'pending' %}
+                                <span class="badge bg-warning text-dark">{{ t('labels.offerStatus.pending') }}</span>
+                            {% elif offer.status == 'accepted' %}
+                                <span class="badge bg-success">{{ t('labels.offerStatus.accepted') }}</span>
+                            {% elif offer.status == 'rejected' %}
+                                <span class="badge bg-danger">{{ t('labels.offerStatus.rejected') }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ offer.status }}</span>
+                            {% endif %}
+                        </p>
+                        {% if offer.note %}
+                        <p class="mb-2 text-muted">{{ offer.note }}</p>
+                        {% endif %}
+                        {% if request.status == 'pending' and offer.status == 'pending' %}
+                        <button class="btn btn-sm btn-success w-100" onclick="chooseOffer({{ offer.offer_id }})">
+                            <i class="fas fa-check me-1"></i>
+                            {{ t('web.trackRequest.chooseOffer') }}
+                        </button>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted mb-0">{{ t('web.trackRequest.noOffers') }}</p>
+                {% endif %}
+                <p class="small text-muted mt-3 mb-0">
+                    {{ t('web.trackRequest.offersPollHint') }}
+                </p>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if invoice %}
+        <div class="card mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.trackRequest.invoiceCardHeading') }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-1"><strong>{{ t('web.trackRequest.invoiceNumber') }}</strong> {{ invoice.invoice_number }}</p>
+                <p class="mb-1"><strong>{{ t('web.trackRequest.subtotal') }}</strong> {{ invoice.subtotal }} {{ t('web.currencySuffix') }}</p>
+                <p class="mb-1"><strong>{{ t('web.trackRequest.taxAmount', rate=invoice.tax_rate) }}</strong> {{ invoice.tax_amount }} {{ t('web.currencySuffix') }}</p>
+                <p class="mb-2"><strong>{{ t('web.trackRequest.grandTotal') }}</strong> {{ invoice.total }} {{ t('web.currencySuffix') }}</p>
+                <p class="mb-2"><strong>{{ t('web.trackRequest.invoicePaymentStatus') }}</strong>
+                    {% if invoice.payment_status in ['paid', 'pending', 'failed', 'refunded'] %}
+                        <span class="badge {% if invoice.payment_status == 'paid' %}bg-success{% elif invoice.payment_status == 'pending' %}bg-warning{% elif invoice.payment_status == 'failed' %}bg-danger{% else %}bg-secondary{% endif %}">{{ t('web.invoicePayment.' ~ invoice.payment_status) }}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ invoice.payment_status }}</span>
+                    {% endif %}
+                </p>
+                <p class="mb-3 text-muted">{{ t('web.trackRequest.issuedAt') }} {{ invoice.issued_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                <a class="btn btn-outline-primary btn-sm w-100" href="{{ url_for('view_invoice', request_id=request.request_id) }}">
+                    <i class="fas fa-file-invoice me-1"></i>
+                    {{ t('web.trackRequest.viewInvoice') }}
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Payment Section -->
+        {% if request.status in ['in_progress', 'completed'] and request.payment_status == 'pending' and current_user.role == 'customer' %}
+        <div class="card mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.trackRequest.paymentHeading') }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="small text-muted mb-3">
+                    {{ t('web.trackRequest.paymentHint') }}
+                </p>
+                <h4 class="text-center mb-4">{{ payment_amount or '—' }} {{ t('web.currencySuffix') }}</h4>
+                <form id="paymentForm" onsubmit="return handlePayment(event)">
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.trackRequest.cardNumber') }}</label>
+                        <input type="text" class="form-control" required pattern="[0-9]{16}" placeholder="XXXX XXXX XXXX XXXX">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">{{ t('web.trackRequest.expiry') }}</label>
+                            <input type="text" class="form-control" required pattern="(0[1-9]|1[0-2])\/[0-9]{2}" placeholder="MM/YY">
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ t('web.trackRequest.cvv') }}</label>
+                            <input type="text" class="form-control" required pattern="[0-9]{3,4}" placeholder="XXX">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fas fa-credit-card me-1"></i>
+                        {{ t('web.trackRequest.completePayment') }}
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if current_user.role == 'customer' and request.status == 'completed' and request.payment_status == 'completed' and not existing_rating %}
+        <div class="card mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.trackRequest.rateTechnicianHeading') }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">{{ t('web.trackRequest.ratingLabel') }}</label>
+                    <select id="ratingScore" class="form-select">
+                        <option value="5">{{ t('web.trackRequest.rating5') }}</option>
+                        <option value="4">{{ t('web.trackRequest.rating4') }}</option>
+                        <option value="3">{{ t('web.trackRequest.rating3') }}</option>
+                        <option value="2">{{ t('web.trackRequest.rating2') }}</option>
+                        <option value="1">{{ t('web.trackRequest.rating1') }}</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{ t('web.trackRequest.commentLabel') }}</label>
+                    <textarea id="ratingComment" class="form-control" rows="3"></textarea>
+                </div>
+                <button class="btn btn-warning w-100" onclick="submitRating()">
+                    <i class="fas fa-star me-1"></i>
+                    {{ t('web.trackRequest.submitRating') }}
+                </button>
+            </div>
+        </div>
+        {% elif existing_rating %}
+        <div class="card mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.trackRequest.yourRatingHeading') }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-1"><strong>{{ t('web.trackRequest.scoreLine') }}</strong> {{ existing_rating.stars }} / 5</p>
+                <p class="mb-0 text-muted">{{ existing_rating.comment or t('web.trackRequest.noComment') }}</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Actions -->
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.trackRequest.actionsHeading') }}</h5>
+            </div>
+            <div class="card-body">
+                {% if current_user.role == 'technician' and request.status == 'in_progress' %}
+                <button onclick="completeRequest({{ request.request_id }})"
+                        class="btn btn-success w-100 mb-2">
+                    <i class="fas fa-check-double me-1"></i>
+                    {{ t('web.trackRequest.completeWork') }}
+                </button>
+                {% endif %}
+
+                {% if current_user.role == 'admin' %}
+                <a href="{{ url_for('admin.invoices_page', request_id=request.request_id) }}" class="btn btn-outline-primary w-100 mb-2">
+                    <i class="fas fa-file-invoice-dollar me-1"></i>
+                    {{ t('web.trackRequest.openInvoiceAdmin') }}
+                </a>
+                {% endif %}
+                
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary w-100">
+                    <i class="fas fa-arrow-left me-1"></i>
+                    {{ t('web.trackRequest.backToDashboard') }}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.timeline {
+    position: relative;
+    padding: 0;
+    list-style: none;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 2rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 3px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 15px;
+    height: calc(100% + 1rem);
+    width: 2px;
+    background-color: #e9ecef;
+}
+
+.timeline-item:last-child::before {
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script type="application/json" id="track-request-i18n">
+{{ {
+  'confirmPayment': t('web.trackJs.confirmPayment'),
+  'paymentFailed': t('web.trackJs.paymentFailed'),
+  'paymentError': t('web.trackJs.paymentError'),
+  'completeConfirm': t('web.trackJs.completeConfirm'),
+  'completeFailed': t('web.trackJs.completeFailed'),
+  'completeError': t('web.trackJs.completeError'),
+  'chooseOfferConfirm': t('web.trackJs.chooseOfferConfirm'),
+  'chooseOfferFailed': t('web.trackJs.chooseOfferFailed'),
+  'chooseOfferError': t('web.trackJs.chooseOfferError'),
+  'enterValidAmount': t('web.trackJs.enterValidAmount'),
+  'sendOfferConfirm': t('web.trackJs.sendOfferConfirm'),
+  'offerSent': t('web.trackJs.offerSent'),
+  'offerFailed': t('web.trackJs.offerFailed'),
+  'offerError': t('web.trackJs.offerError'),
+  'submitRatingConfirm': t('web.trackJs.submitRatingConfirm'),
+  'ratingFailed': t('web.trackJs.ratingFailed'),
+  'ratingError': t('web.trackJs.ratingError')
+}|tojson }}
+</script>
+<script>
+const TRK = JSON.parse(document.getElementById('track-request-i18n').textContent);
+
+async function handlePayment(event) {
+    event.preventDefault();
+    
+    if (await showAppConfirm(TRK.confirmPayment)) {
+        fetch(`/pay/{{ request.request_id }}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                payment_method: 'credit_card'
+            })
+        })
+        .then(response => response.json())
+        .then(async data => {
+            if (data.success) {
+                await showAppAlert(data.message);
+                location.reload();
+            } else {
+                await showAppAlert(data.message || TRK.paymentFailed);
+            }
+        })
+        .catch(async error => {
+            console.error('Error:', error);
+            await showAppAlert(TRK.paymentError);
+        });
+    }
+    
+    return false;
+}
+
+async function completeRequest(requestId) {
+    if (await showAppConfirm(TRK.completeConfirm)) {
+        fetch(`/tech/complete/${requestId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(async data => {
+            if (data.success) {
+                await showAppAlert(data.message);
+                location.reload();
+            } else {
+                await showAppAlert(data.message || TRK.completeFailed);
+            }
+        })
+        .catch(async error => {
+            console.error('Error:', error);
+            await showAppAlert(TRK.completeError);
+        });
+    }
+}
+
+async function chooseOffer(offerId) {
+    if (!(await showAppConfirm(TRK.chooseOfferConfirm))) return;
+    fetch(`/customer/choose-offer/${offerId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(async data => {
+        if (data.success) {
+            await showAppAlert(data.message);
+            location.reload();
+        } else {
+            await showAppAlert(data.message || TRK.chooseOfferFailed);
+        }
+    })
+    .catch(async error => {
+        console.error('Error:', error);
+        await showAppAlert(TRK.chooseOfferError);
+    });
+}
+
+async function submitTechOffer(event) {
+    event.preventDefault();
+    const amount = parseFloat(document.getElementById('techOfferAmount').value || '');
+    const note = document.getElementById('techOfferNote').value || '';
+    if (isNaN(amount) || amount <= 0) {
+        await showAppAlert(TRK.enterValidAmount);
+        return false;
+    }
+    if (!(await showAppConfirm(TRK.sendOfferConfirm))) return false;
+
+    fetch(`/tech/offer/{{ request.request_id }}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            amount,
+            note
+        })
+    })
+    .then(response => response.json())
+    .then(async data => {
+        if (data.success) {
+            await showAppAlert(data.message || TRK.offerSent);
+            location.reload();
+        } else {
+            await showAppAlert(data.message || TRK.offerFailed);
+        }
+    })
+    .catch(async error => {
+        console.error('Error:', error);
+        await showAppAlert(TRK.offerError);
+    });
+    return false;
+}
+
+async function submitRating() {
+    const stars = document.getElementById('ratingScore').value;
+    const comment = document.getElementById('ratingComment').value;
+    if (!(await showAppConfirm(TRK.submitRatingConfirm))) return;
+    fetch(`/rate/{{ request.request_id }}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ stars, comment })
+    })
+    .then(response => response.json())
+    .then(async data => {
+        if (data.success) {
+            await showAppAlert(data.message);
+            location.reload();
+        } else {
+            await showAppAlert(data.message || TRK.ratingFailed);
+        }
+    })
+    .catch(async error => {
+        console.error('Error:', error);
+        await showAppAlert(TRK.ratingError);
+    });
+}
+
+// Polling: status/payment alone do not change when a technician submits an offer — also watch offers.
+const trackPollBaseline = {
+    status: {{ poll_baseline.status|tojson }},
+    payment_status: {{ poll_baseline.payment_status|tojson }},
+    offers_count: {{ poll_baseline.offers_count }},
+    offers_amount_sum: {{ poll_baseline.offers_amount_sum|tojson }}
+};
+
+function pollRequestStatus() {
+    fetch(`/track/{{ request.request_id }}/status`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success === false) return;
+            if (data.status !== trackPollBaseline.status ||
+                data.payment_status !== trackPollBaseline.payment_status ||
+                Number(data.offers_count) !== trackPollBaseline.offers_count ||
+                String(data.offers_amount_sum) !== String(trackPollBaseline.offers_amount_sum)) {
+                location.reload();
+            }
+        })
+        .catch(() => {});
+}
+
+// Poll every 5s while waiting for offers; slower otherwise
+setInterval(pollRequestStatus, {{ poll_interval_ms }});
+</script>
+{% if can_show_exact_map %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function () {
+    const btn = document.getElementById('trackShowMapBtn');
+    const panel = document.getElementById('trackMapPanel');
+    const mapEl = document.getElementById('trackServiceLocationMap');
+    if (!btn || !panel || !mapEl) return;
+
+    const lat = {{ map_lat|tojson }};
+    const lng = {{ map_lng|tojson }};
+    let mapInited = false;
+    let collapseInst = null;
+
+    function initMap() {
+        if (mapInited || typeof L === 'undefined') return;
+        delete L.Icon.Default.prototype._getIconUrl;
+        L.Icon.Default.mergeOptions({
+            iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        });
+        const map = L.map(mapEl, { scrollWheelZoom: true }).setView([lat, lng], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap',
+        }).addTo(map);
+        L.marker([lat, lng]).addTo(map);
+        mapInited = true;
+        setTimeout(function () { map.invalidateSize(); }, 200);
+    }
+
+    btn.addEventListener('click', function () {
+        if (!collapseInst) {
+            collapseInst = bootstrap.Collapse.getOrCreateInstance(panel, { toggle: false });
+        }
+        collapseInst.toggle();
+    });
+
+    panel.addEventListener('shown.bs.collapse', function () {
+        btn.setAttribute('aria-expanded', 'true');
+        initMap();
+    });
+    panel.addEventListener('hidden.bs.collapse', function () {
+        btn.setAttribute('aria-expanded', 'false');
+    });
+})();
+</script>
+{% endif %}
+{% endblock %} 

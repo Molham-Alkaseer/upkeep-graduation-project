@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('web.admin.logs.title') }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+ <div class="row">
+  <aside class="col-md-2 sidebar d-none d-md-block">
+   <ul class="nav flex-column pt-4"><li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">{{ t('web.admin.nav.back') }}</a></li></ul>
+  </aside>
+  <section class="col-md-10 p-4">
+   <h2 class="mb-4">{{ t('web.admin.logs.title') }}</h2>
+   <table class="table" id="logTable"><thead><tr><th>{{ t('web.admin.requests.colId') }}</th><th>{{ t('web.admin.logs.colAdmin') }}</th><th>{{ t('web.admin.logs.colAction') }}</th><th>{{ t('web.admin.logs.colTarget') }}</th><th>{{ t('web.admin.logs.colTime') }}</th></tr></thead><tbody></tbody></table>
+  </section>
+ </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+async function load(){
+ const res = await fetch('/admin/api/logs');
+ const logs = await res.json();
+ const tbody = document.querySelector('#logTable tbody');
+ tbody.innerHTML='';
+ logs.forEach(l=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${l.id}</td><td>${l.admin||''}</td><td>${l.action}</td><td>${l.target||''}</td><td>${l.created_at}</td>`;tbody.appendChild(tr);});
+}
+document.addEventListener('DOMContentLoaded',load);
+</script>
+{% endblock %}

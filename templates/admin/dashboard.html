@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('web.admin.title') }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.sidebar {
+    min-height: 100vh;
+    background: #fff;
+    border-left: 1px solid #e9ecef;
+}
+.card-stat {
+    text-align: center;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar navigation -->
+        <aside class="col-md-2 sidebar d-none d-md-block">
+            <ul class="nav flex-column pt-4">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">{{ t('web.admin.nav.stats') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.users_page') }}">{{ t('web.admin.nav.users') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.requests_page') }}">{{ t('web.admin.nav.requests') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.invoices_page') }}">{{ t('web.admin.nav.invoices') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.settings_page') }}">{{ t('web.admin.nav.settings') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.specs_page') }}">{{ t('web.admin.nav.specs') }}</a></li>
+                {% if current_user.role == 'admin' %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.logs_page') }}">{{ t('web.admin.nav.logs') }}</a></li>
+                {% endif %}
+            </ul>
+        </aside>
+
+        <section class="col-md-10 p-4">
+            <h2 class="mb-4">{{ t('web.admin.dashboard.heading') }}</h2>
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="card card-stat">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ t('web.admin.dashboard.totalRequests') }}</h5>
+                            <h2>{{ total_requests }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-stat">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ t('web.admin.dashboard.users') }}</h5>
+                            <h2>{{ users_count }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-stat">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ t('web.admin.dashboard.completed') }}</h5>
+                            <h2>{{ status_dict.get('completed', 0) }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-stat">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ t('web.admin.dashboard.pending') }}</h5>
+                            <h2>{{ status_dict.get('pending', 0) }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-stat">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ t('web.admin.dashboard.avgTechRating') }}</h5>
+                            <h2>{{ ratings_overall_avg if ratings_overall_avg is not none else '—' }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-stat">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ t('web.admin.dashboard.totalRatings') }}</h5>
+                            <h2>{{ ratings_overall_count }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <canvas id="statusChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <canvas id="techChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">{{ t('web.admin.dashboard.revenueCardTitle') }}</h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if technician_stats %}
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th>{{ t('web.admin.dashboard.colTechnician') }}</th>
+                                    <th>{{ t('web.admin.dashboard.colPaidCount') }}</th>
+                                    <th>{{ t('web.admin.dashboard.colTotalRevenue', currency=t('web.currencySuffix')) }}</th>
+                                    <th>{{ t('web.admin.dashboard.colAvgJob', currency=t('web.currencySuffix')) }}</th>
+                                    <th>{{ t('web.admin.dashboard.colMonthly', currency=t('web.currencySuffix')) }}</th>
+                                    <th>{{ t('web.admin.dashboard.colAvgRating') }}</th>
+                                    <th>{{ t('web.admin.dashboard.colRatingsCount') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in technician_stats %}
+                                <tr>
+                                    <td>{{ user_label(row.technician_name) if row.technician_name else t('web.trackRequest.technicianFallback', id=row.technician_id) }}</td>
+                                    <td>{{ row.paid_invoices_count }}</td>
+                                    <td>{{ '%.2f'|format(row.total_revenue) }}</td>
+                                    <td>{{ '%.2f'|format(row.avg_job_value) }}</td>
+                                    <td>{{ '%.2f'|format(row.monthly_revenue) }}</td>
+                                    <td>{{ ('%.2f'|format(row.avg_rating)) if row.avg_rating is not none else '—' }}</td>
+                                    <td>{{ row.ratings_count }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="p-3 text-muted">{{ t('web.admin.dashboard.noTechData') }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="application/json" id="admin-chart-i18n">
+{{ {
+  'statusLabels': {
+    'pending': t('web.status.request.pending'),
+    'assigned': t('web.status.request.assigned'),
+    'in_progress': t('web.status.request.in_progress'),
+    'completed': t('web.status.request.completed'),
+    'cancelled': t('web.status.request.cancelled')
+  },
+  'completedJobs': t('web.admin.dashboard.chartCompletedJobs')
+}|tojson }}
+</script>
+<script>
+const ADM_CHART = JSON.parse(document.getElementById('admin-chart-i18n').textContent);
+const statusCtx = document.getElementById('statusChart');
+const techCtx = document.getElementById('techChart');
+const statusDict = {{ status_dict|tojson }};
+const statusKeys = Object.keys(statusDict);
+new Chart(statusCtx, {
+    type: 'doughnut',
+    data: {
+        labels: statusKeys.map(function (k) { return ADM_CHART.statusLabels[k] || k; }),
+        datasets: [{
+            data: statusKeys.map(function (k) { return statusDict[k]; }),
+            backgroundColor: ['#1E90FF', '#FF7A00', '#28a745', '#dc3545', '#6c757d'],
+        }]
+    }
+});
+
+new Chart(techCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ tech_perf_labels|tojson }},
+        datasets: [{
+            label: ADM_CHART.completedJobs,
+            data: {{ tech_perf_counts|tojson }},
+            backgroundColor: '#1E90FF'
+        }]
+    },
+    options: {responsive: true, plugins: {legend: {display: false}}}
+});
+</script>
+{% endblock %}

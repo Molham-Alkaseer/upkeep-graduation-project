@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('web.admin.invoices.title') }}{% endblock %}
+
+{% block extra_css %}
+<style>
+.sidebar {
+    min-height: 100vh;
+    background: #fff;
+    border-left: 1px solid #e9ecef;
+}
+.table thead th {
+    white-space: nowrap;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-md-2 sidebar d-none d-md-block">
+            <ul class="nav flex-column pt-4">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">{{ t('web.admin.nav.stats') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.users_page') }}">{{ t('web.admin.nav.users') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.requests_page') }}">{{ t('web.admin.nav.requests') }}</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{{ url_for('admin.invoices_page') }}">{{ t('web.admin.nav.invoices') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.settings_page') }}">{{ t('web.admin.nav.settings') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.specs_page') }}">{{ t('web.admin.nav.specs') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.logs_page') }}">{{ t('web.admin.nav.logs') }}</a></li>
+            </ul>
+        </aside>
+
+        <section class="col-md-10 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="mb-0">{{ t('web.admin.invoices.title') }}</h2>
+                <a class="btn btn-outline-success"
+                   href="{{ url_for('admin.invoices_export_csv', date_from=filters.date_from, date_to=filters.date_to, status=filters.status, technician_id=filters.technician_id, customer_id=filters.customer_id, request_id=filters.request_id) }}">
+                    <i class="fas fa-file-csv me-1"></i>
+                    {{ t('web.admin.invoices.exportCsv') }}
+                </a>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">{{ t('web.admin.invoices.filtersTitle') }}</h5>
+                </div>
+                <div class="card-body">
+                    <form method="GET" action="{{ url_for('admin.invoices_page') }}">
+                        <div class="row g-3">
+                            <div class="col-md-2">
+                                <label class="form-label">{{ t('web.admin.invoices.fromDate') }}</label>
+                                <input type="date" class="form-control" name="date_from" value="{{ filters.date_from }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">{{ t('web.admin.invoices.toDate') }}</label>
+                                <input type="date" class="form-control" name="date_to" value="{{ filters.date_to }}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">{{ t('web.admin.invoices.paymentStatus') }}</label>
+                                <select class="form-select" name="status">
+                                    <option value="">{{ t('web.admin.invoices.filterAll') }}</option>
+                                    <option value="pending" {% if filters.status == 'pending' %}selected{% endif %}>{{ t('web.admin.invoices.filterPending') }}</option>
+                                    <option value="paid" {% if filters.status == 'paid' %}selected{% endif %}>{{ t('web.admin.invoices.filterPaid') }}</option>
+                                    <option value="failed" {% if filters.status == 'failed' %}selected{% endif %}>{{ t('web.admin.invoices.filterFailed') }}</option>
+                                    <option value="refunded" {% if filters.status == 'refunded' %}selected{% endif %}>{{ t('web.admin.invoices.filterRefunded') }}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{{ t('web.admin.invoices.technician') }}</label>
+                                <select class="form-select" name="technician_id">
+                                    <option value="">{{ t('web.admin.invoices.filterAll') }}</option>
+                                    {% for tech in technicians %}
+                                    <option value="{{ tech.user_id }}" {% if filters.technician_id|int == tech.user_id %}selected{% endif %}>
+                                        {{ user_label(tech) }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">{{ t('web.admin.invoices.customer') }}</label>
+                                <select class="form-select" name="customer_id">
+                                    <option value="">{{ t('web.admin.invoices.filterAll') }}</option>
+                                    {% for customer in customers %}
+                                    <option value="{{ customer.user_id }}" {% if filters.customer_id|int == customer.user_id %}selected{% endif %}>
+                                        {{ user_label(customer) }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">{{ t('web.admin.invoices.requestId') }}</label>
+                                <input type="number" class="form-control" name="request_id" min="1" value="{{ filters.request_id }}">
+                            </div>
+                            <div class="col-md-10 d-flex gap-2 align-items-end">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-filter me-1"></i>
+                                    {{ t('web.admin.invoices.apply') }}
+                                </button>
+                                <a href="{{ url_for('admin.invoices_page') }}" class="btn btn-outline-secondary">{{ t('web.admin.invoices.reset') }}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h6 class="mb-1">{{ t('web.admin.invoices.subtotalSum') }}</h6>
+                            <h4 class="text-primary mb-0">{{ '%.2f'|format(totals.subtotal) }} {{ t('web.currencySuffix') }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h6 class="mb-1">{{ t('web.admin.invoices.taxSum') }}</h6>
+                            <h4 class="text-warning mb-0">{{ '%.2f'|format(totals.tax_collected) }} {{ t('web.currencySuffix') }}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h6 class="mb-1">{{ t('web.admin.invoices.grandSum') }}</h6>
+                            <h4 class="text-success mb-0">{{ '%.2f'|format(totals.grand_total) }} {{ t('web.currencySuffix') }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">{{ t('web.admin.invoices.listTitle') }}</h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if invoice_rows %}
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th>{{ t('web.admin.invoices.colInvoiceNum') }}</th>
+                                    <th>{{ t('web.admin.invoices.colIssued') }}</th>
+                                    <th>{{ t('web.admin.invoices.colRequest') }}</th>
+                                    <th>{{ t('web.admin.invoices.colCustomer') }}</th>
+                                    <th>{{ t('web.admin.invoices.colTechnician') }}</th>
+                                    <th>{{ t('web.admin.invoices.colStatus') }}</th>
+                                    <th>{{ t('web.admin.invoices.colPreTax') }}</th>
+                                    <th>{{ t('web.admin.invoices.colTax') }}</th>
+                                    <th>{{ t('web.admin.invoices.colTotal') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in invoice_rows %}
+                                <tr>
+                                    <td>{{ row.invoice_number }}</td>
+                                    <td>{{ row.issued_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>#{{ row.request_id }}</td>
+                                    <td>{{ user_label(row.customer_name) if row.customer_name else '-' }}</td>
+                                    <td>{{ user_label(row.technician_name) if row.technician_name else t('web.admin.invoices.unassigned') }}</td>
+                                    <td>
+                                        {% if row.payment_status in ['paid', 'pending', 'failed', 'refunded'] %}
+                                            <span class="badge {% if row.payment_status == 'paid' %}bg-success{% elif row.payment_status == 'pending' %}bg-warning text-dark{% elif row.payment_status == 'failed' %}bg-danger{% else %}bg-secondary{% endif %}">{{ t('web.invoicePayment.' ~ row.payment_status) }}</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">{{ row.payment_status }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ '%.2f'|format(row.subtotal) }}</td>
+                                    <td>{{ '%.2f'|format(row.tax_amount) }} <span class="text-muted small">({{ '%.2f'|format(row.tax_rate) }}%)</span></td>
+                                    <td>{{ '%.2f'|format(row.total) }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="p-4 text-muted">{{ t('web.admin.invoices.empty') }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

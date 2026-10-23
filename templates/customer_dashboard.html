@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t('web.customerDashboard.pageTitle') }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 px-md-4">
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>{{ t('web.customerDashboard.heading') }}</h2>
+            {% if current_user.role == 'customer' %}
+            <a href="{{ url_for('create_request') }}" class="btn btn-orange">
+                <i class="fas fa-plus me-1"></i>
+                {{ t('web.customerDashboard.newRequest') }}
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <!-- Request Statistics -->
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.customerDashboard.statsCardTitle') }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3 g-md-4">
+            <div class="col-sm-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ requests|selectattr('status', 'equalto', 'pending')|list|length }}</h3>
+                        <p class="mb-0">{{ t('web.customerDashboard.stats.pending') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ requests|selectattr('status', 'equalto', 'in_progress')|list|length }}</h3>
+                        <p class="mb-0">{{ t('web.customerDashboard.stats.inProgress') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ requests|selectattr('status', 'equalto', 'completed')|list|length }}</h3>
+                        <p class="mb-0">{{ t('web.customerDashboard.stats.completed') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ requests|selectattr('status', 'equalto', 'cancelled')|list|length }}</h3>
+                        <p class="mb-0">{{ t('web.customerDashboard.stats.cancelled') }}</p>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request List -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.customerDashboard.tableTitle') }}</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if requests %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>{{ t('web.customerDashboard.colId') }}</th>
+                                <th>{{ t('web.customerDashboard.colService') }}</th>
+                                <th>{{ t('web.customerDashboard.colCityDistrict') }}</th>
+                                <th>{{ t('web.customerDashboard.colTechnician') }}</th>
+                                <th>{{ t('web.customerDashboard.colStatus') }}</th>
+                                <th>{{ t('web.customerDashboard.colPayment') }}</th>
+                                <th>{{ t('web.customerDashboard.colDate') }}</th>
+                                <th>{{ t('web.customerDashboard.colActions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in requests %}
+                            <tr>
+                                <td>#{{ request.request_id }}</td>
+                                <td>{{ service_label(request.service) }}</td>
+                                <td class="align-middle small">
+                                    {% if request.city or request.district %}
+                                    {{ request.city or '—' }} — {{ request.district or '—' }}
+                                    {% else %}
+                                    <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if request.technician %}
+                                    <a href="{{ url_for('request_public_profile', request_id=request.request_id, user_id=request.technician.user_id) }}"
+                                       class="d-inline-flex align-items-center gap-2 text-decoration-none">
+                                        {% if request.technician.profile_image %}
+                                        <img src="{{ url_for('static', filename=request.technician.profile_image) }}"
+                                             alt=""
+                                             class="rounded-circle border flex-shrink-0"
+                                             width="32" height="32"
+                                             style="object-fit: cover;">
+                                        {% else %}
+                                        <span class="text-secondary flex-shrink-0 d-inline-flex align-items-center justify-content-center" aria-hidden="true" style="font-size:32px;line-height:1;">
+                                            <i class="fas fa-user-circle"></i>
+                                        </span>
+                                        {% endif %}
+                                        <span>{{ user_label(request.technician) }}</span>
+                                    </a>
+                                    {% else %}
+                                        <span class="text-muted">{{ t('web.customerDashboard.unassigned') }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% set status_classes = {
+                                        'pending': 'bg-warning',
+                                        'assigned': 'bg-info',
+                                        'in_progress': 'bg-primary',
+                                        'completed': 'bg-success',
+                                        'cancelled': 'bg-danger'
+                                    } %}
+                                    <span class="badge {{ status_classes[request.status] }}">
+                                        {{ t('web.status.request.' ~ request.status) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% set payment_classes = {
+                                        'pending': 'bg-warning',
+                                        'processing': 'bg-info',
+                                        'completed': 'bg-success',
+                                        'refunded': 'bg-danger'
+                                    } %}
+                                    <span class="badge {{ payment_classes[request.payment_status] }}">
+                                        {{ t('web.status.payment.' ~ request.payment_status) }}
+                                    </span>
+                                </td>
+                                <td>{{ request.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>
+                                    {% if request.status == 'pending' and pending_offer_counts.get(request.request_id, 0) > 0 %}
+                                    <div class="small text-success mb-1">
+                                        <i class="fas fa-hand-holding-usd me-1"></i>
+                                        {{ t('web.customerDashboard.newOffers', count=pending_offer_counts.get(request.request_id, 0)) }}
+                                    </div>
+                                    {% endif %}
+                                    <a href="{{ url_for('track', id=request.request_id) }}" 
+                                       class="btn btn-sm btn-primary">
+                                        <i class="fas fa-eye"></i>
+                                        {% if request.status == 'pending' %}
+                                        {{ t('web.customerDashboard.viewOffers') }}
+                                        {% else %}
+                                        {{ t('web.customerDashboard.track') }}
+                                        {% endif %}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+                    <h5>{{ t('web.customerDashboard.emptyTitle') }}</h5>
+                    <p class="text-muted">{{ t('web.customerDashboard.emptyHint') }}</p>
+                    {% if current_user.role == 'customer' %}
+                    <a href="{{ url_for('create_request') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>
+                        {{ t('web.customerDashboard.newRequest') }}
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

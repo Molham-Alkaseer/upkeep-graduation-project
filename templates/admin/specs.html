@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('web.admin.specs.title') }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <aside class="col-md-2 sidebar d-none d-md-block">
+      <ul class="nav flex-column pt-4">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">{{ t('web.admin.nav.back') }}</a></li>
+      </ul>
+    </aside>
+    <section class="col-md-10 p-4">
+      <h2 class="mb-4">{{ t('web.admin.specs.title') }}</h2>
+      <div class="mb-3 d-flex gap-2">
+        <input id="nameAr" class="form-control w-25" placeholder="{{ t('web.admin.specs.placeholderAr') }}">
+        <input id="nameEn" class="form-control w-25" placeholder="{{ t('web.admin.specs.placeholderEn') }}">
+        <button class="btn btn-primary" onclick="addSpec()">{{ t('web.admin.specs.add') }}</button>
+      </div>
+      <table class="table" id="specTable">
+        <thead><tr><th>{{ t('web.admin.requests.colId') }}</th><th>{{ t('web.admin.specs.colArabic') }}</th><th>{{ t('web.admin.specs.colEnglish') }}</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="application/json" id="admin-specs-i18n">
+{{ {
+  'delete': t('web.admin.specs.delete'),
+  'fillFields': t('web.admin.specs.fillFields'),
+  'confirmDelete': t('web.admin.specs.confirmDelete'),
+  'deleteFailed': t('web.admin.specs.deleteFailed'),
+  'unexpected': t('web.admin.specs.unexpected')
+}|tojson }}
+</script>
+<script>
+const ADM_SPEC = JSON.parse(document.getElementById('admin-specs-i18n').textContent);
+async function load(){
+  const res = await fetch('/admin/api/specializations');
+  const specs = await res.json();
+  const tbody = document.querySelector('#specTable tbody');
+  tbody.innerHTML='';
+  specs.forEach(s=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${s.id}</td><td contenteditable onblur="update(${s.id},'name_ar',this.innerText)">${s.name_ar}</td><td contenteditable onblur="update(${s.id},'name_en',this.innerText)">${s.name_en}</td><td><button class='btn btn-sm btn-danger' onclick='del(${s.id})'>${ADM_SPEC.delete}</button></td>`;tbody.appendChild(tr);
+  })
+}
+async function addSpec(){
+  const ar=document.getElementById('nameAr').value;const en=document.getElementById('nameEn').value;
+  if(!ar||!en){ await showAppAlert(ADM_SPEC.fillFields); return; }
+  await fetch('/admin/api/specializations',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name_ar:ar,name_en:en})});
+  load();
+}
+async function update(id,field,val){
+  await fetch(`/admin/api/specializations/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({[field]:val})});
+}
+async function del(id){
+  if(!(await showAppConfirm(ADM_SPEC.confirmDelete)))return;
+  try {
+    const res = await fetch(`/admin/api/specializations/${id}`,{method:'DELETE'});
+    if(res.ok){
+      load();
+    } else {
+      const data = await res.json();
+      await showAppAlert(data.error || ADM_SPEC.deleteFailed);
+    }
+  } catch(err){
+    console.error(err);
+    await showAppAlert(ADM_SPEC.unexpected);
+  }
+}
+document.addEventListener('DOMContentLoaded',load);
+</script>
+{% endblock %}

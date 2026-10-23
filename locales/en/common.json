@@ -1,0 +1,1115 @@
+{
+  "meta": {
+    "appName": "UpKeep"
+  },
+  "nav": {
+    "login": "Sign in",
+    "register": "Create account",
+    "home": "Home",
+    "profile": "Profile",
+    "editProfile": "Edit profile",
+    "languageSettings": "Language",
+    "myRequests": "My requests",
+    "requestSectionTitle": "Request",
+    "requestDetail": "Request details",
+    "newRequest": "New request",
+    "technicianBoard": "Technician board",
+    "admin": "Admin",
+    "adminInvoices": "Admin invoices",
+    "languageQuick": "Language & region",
+    "logout": "Log out"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languageDescription": "Display language and page direction",
+    "english": "English",
+    "arabic": "العربية",
+    "hint": "Saved on this device. The page reloads when you switch language.",
+    "selected": "Selected",
+    "applyLanguage": "Use {{name}}"
+  },
+  "roles": {
+    "customer": "Customer",
+    "technician": "Technician",
+    "admin": "Administrator"
+  },
+  "profile": {
+    "title": "Profile",
+    "editProfile": "Edit profile",
+    "email": "Email",
+    "phone": "Phone",
+    "city": "City",
+    "district": "District",
+    "specialization": "Specialization",
+    "avgRating": "Average rating",
+    "joined": "Member since",
+    "ratingSummary": "{{avg}} / 5 — {{count}} reviews",
+    "ratingSummaryEmpty": "— — {{count}} reviews",
+    "emptyField": "—",
+    "settingsSection": "Settings",
+    "openLanguage": "Language",
+    "openLanguageHint": "English or Arabic",
+    "a11yEdit": "Edit profile",
+    "a11yLogout": "Log out",
+    "a11yLanguage": "Open language settings"
+  },
+  "publicProfile": {
+    "titleTechnician": "Technician profile",
+    "titleCustomer": "Customer profile",
+    "bio": "About",
+    "specialization": "Specialization",
+    "rating": "Rating",
+    "phone": "Phone",
+    "cityArea": "City / district",
+    "a11yOpenTechnician": "Open technician profile",
+    "a11yOpenCustomer": "Open customer profile",
+    "loadError": "Could not load profile",
+    "portfolioHeading": "Work portfolio",
+    "portfolioEmpty": "No portfolio photos yet.",
+    "portfolioOpenImage": "Open gallery item {{index}} of {{total}}",
+    "portfolioClose": "Close gallery",
+    "portfolioPrev": "Previous photo",
+    "portfolioNext": "Next photo"
+  },
+  "portfolio": {
+    "manageTitle": "Work portfolio",
+    "manageSubtitle": "Photos shown on your profile (same limits apply everywhere).",
+    "openManage": "Manage portfolio",
+    "addPhoto": "Add photo",
+    "captionLabel": "Caption",
+    "captionPlaceholder": "Short description (required)",
+    "categoryLabel": "Category (optional)",
+    "workDateLabel": "Job date (optional)",
+    "pickImage": "Choose image",
+    "submitAdd": "Upload",
+    "uploading": "Uploading…",
+    "loadError": "Could not load portfolio",
+    "saveError": "Could not save",
+    "delete": "Remove",
+    "deleteConfirm": "Remove this photo from your portfolio?",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "emptyOwner": "Add your first project photo — customers will see it on your profile.",
+    "limitReached": "Maximum number of portfolio items reached.",
+    "hintLimits": "Up to {{maxItems}} items · {{maxMb}} MB per image",
+    "saveItem": "Save details"
+  },
+  "errors": {
+    "accountLoadFailed": "Couldn't load account",
+    "loadFailed": "Could not load",
+    "retry": "Retry"
+  },
+  "filters": {
+    "all": "All"
+  },
+  "technicianNearby": {
+    "locationDeniedBanner": "Location is off — showing all open requests without distance. Enable location to see nearby jobs sorted by distance.",
+    "enableLocationLink": "Open location settings",
+    "radiusKm": "{{km}} km",
+    "distanceAway": "{{distance}} away",
+    "kmUnit": "km",
+    "emptyNearby": "No jobs in this radius",
+    "emptyNearbyHint": "Try a larger radius (25 / 50 / 100 km) or pull to refresh.",
+    "noPinOnRequest": "No map pin",
+    "outsideRadiusMore": "{{count}} more open job(s) outside {{km}} km — increase radius to see them"
+  },
+  "customerCreateRequest": {
+    "mapSectionTitle": "Pin service location on map",
+    "useMyLocation": "Use my location",
+    "pinRequired": "Please pin the service location on the map",
+    "locationCapturing": "Getting your location…",
+    "locationOk": "Service location set on the map",
+    "locationDenied": "Location permission denied. Pin the spot on the map instead.",
+    "locationError": "Could not get your location. Try again or pin on the map."
+  },
+  "emptyStates": {
+    "requestListTitle": "No requests",
+    "requestListHint": "Try changing the filter or pull to refresh."
+  },
+  "dialog": {
+    "title": {
+      "alert": "Notice",
+      "error": "Error",
+      "success": "Done",
+      "soon": "Coming soon"
+    },
+    "button": {
+      "ok": "OK",
+      "cancel": "Cancel"
+    }
+  },
+  "login": {
+    "form": {
+      "email": {
+        "label": "Email",
+        "placeholder": "example@email.com"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "••••••••"
+      },
+      "remember": {
+        "label": "Remember me"
+      },
+      "forgot": {
+        "link": "Forgot password?"
+      },
+      "submit": {
+        "label": "Sign in"
+      }
+    },
+    "divider": {
+      "or": "or"
+    },
+    "oauth": {
+      "google": {
+        "label": "Continue with Google",
+        "disabledMessage": "Google sign-in is not enabled in the app yet."
+      }
+    },
+    "footer": {
+      "noAccount": "Don't have an account?",
+      "registerLink": "Create an account"
+    },
+    "validation": {
+      "missingCredentials": "Please enter your email and password."
+    },
+    "error": {
+      "genericFallback": "Sign-in failed"
+    },
+    "forgot": {
+      "configureServer": "Set the server address in app settings first to use password recovery in the browser.",
+      "openUrlFailed": "Could not open the link. Try the browser on the same network as the server."
+    },
+    "a11y": {
+      "emailField": "Email",
+      "passwordField": "Password",
+      "remember": "Remember me",
+      "forgot": "Forgot password",
+      "google": "Sign in with Google"
+    }
+  },
+  "register": {
+    "loading": {
+      "specs": "Loading specializations…"
+    },
+    "banner": {
+      "loadFailed": {
+        "title": "Couldn't load specializations"
+      }
+    },
+    "accountType": {
+      "section": {
+        "label": "Account type"
+      },
+      "customer": {
+        "label": "Customer",
+        "a11y": "Customer"
+      },
+      "technician": {
+        "label": "Maintenance technician",
+        "a11y": "Maintenance technician"
+      }
+    },
+    "specialization": {
+      "section": {
+        "label": "Technician specialization"
+      },
+      "pullHint": "Pull down to retry",
+      "emptyState": "We couldn't load specializations. Pull to refresh or try again later."
+    },
+    "form": {
+      "fullNameAr": {
+        "label": "Full name (Arabic)",
+        "placeholder": "Name as shown in Arabic",
+        "a11y": "Full name in Arabic"
+      },
+      "fullNameEn": {
+        "label": "Full name (English)",
+        "placeholder": "Full name (English)",
+        "a11y": "Full name in English"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "example@domain.com",
+        "a11y": "Email"
+      },
+      "phone": {
+        "label": "Mobile number",
+        "placeholder": "09xxxxxxxx",
+        "a11y": "Mobile number"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "••••••••",
+        "a11y": "Password",
+        "strength": {
+          "veryWeak": "Very weak",
+          "weak": "Weak",
+          "medium": "Medium",
+          "strong": "Strong"
+        },
+        "requirements": {
+          "intro": "Password must be at least 8 characters and include:",
+          "upper": "• At least one uppercase letter",
+          "lower": "• At least one lowercase letter",
+          "digit": "• At least one digit"
+        }
+      },
+      "submit": {
+        "label": "Create account"
+      }
+    },
+    "footer": {
+      "hasAccount": "Already have an account?",
+      "loginLink": "Sign in"
+    },
+    "validation": {
+      "namesBoth": "Please enter your full name in both Arabic and English.",
+      "contactFields": "Please complete email, password, and mobile number.",
+      "passwordRules": "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, and a digit.",
+      "technicianSpecsUnavailable": "You can't register as a technician without the specializations list. Pull down to retry."
+    }
+  },
+  "web": {
+    "currencySuffix": "SYP",
+    "footer": {
+      "rights": "All rights reserved"
+    },
+    "nav": {
+      "customerDashboard": "Dashboard",
+      "techAvailable": "Available requests",
+      "adminDashboard": "Admin dashboard",
+      "signOut": "Log out",
+      "signIn": "Sign in",
+      "createAccount": "Create account"
+    },
+    "dialog": {
+      "close": "Close",
+      "alertTitle": "Notice",
+      "confirmTitle": "Confirm",
+      "promptTitle": "Input",
+      "promptField": "Input",
+      "ok": "OK",
+      "cancel": "Cancel",
+      "inputLabel": "Enter a value"
+    },
+    "status": {
+      "request": {
+        "pending": "Pending",
+        "assigned": "Assigned",
+        "in_progress": "In progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "payment": {
+        "pending": "Pending payment",
+        "processing": "Processing",
+        "completed": "Paid",
+        "refunded": "Refunded"
+      }
+    },
+    "customerDashboard": {
+      "pageTitle": "UpKeep - Dashboard",
+      "heading": "Dashboard",
+      "newRequest": "New request",
+      "stats": {
+        "pending": "Pending requests",
+        "inProgress": "In progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "statsCardTitle": "Request summary",
+      "tableTitle": "Maintenance requests",
+      "colId": "Request #",
+      "colService": "Service type",
+      "colCityDistrict": "City / neighborhood",
+      "colTechnician": "Technician",
+      "colStatus": "Status",
+      "colPayment": "Payment",
+      "colDate": "Date",
+      "colActions": "Actions",
+      "unassigned": "Not assigned",
+      "newOffers": "{{count}} new offer(s)",
+      "viewOffers": "View offers",
+      "track": "Track",
+      "emptyTitle": "No requests yet",
+      "emptyHint": "Create a new request to get started"
+    },
+    "techDashboard": {
+      "pageTitle": "UpKeep - Technician dashboard",
+      "heading": "Technician dashboard",
+      "filterByStatus": "Filter by status",
+      "filterAll": "All",
+      "filterPending": "Pending",
+      "filterInProgress": "In progress",
+      "filterCompleted": "Completed",
+      "stats": {
+        "available": "Available requests",
+        "inProgress": "In progress",
+        "paidInvoices": "Paid invoices",
+        "totalRevenue": "Total revenue (SYP)",
+        "monthlyRevenue": "Revenue this month (SYP)",
+        "avgJob": "Average job value (SYP)",
+        "avgRating": "Average rating",
+        "ratingsCount": "Number of ratings"
+      },
+      "statsCardTitle": "Performance overview",
+      "monthlyCardTitle": "Monthly revenue (last 6 months)",
+      "colMonth": "Month",
+      "colRevenue": "Revenue",
+      "colChart": "Chart",
+      "noInvoiceData": "No paid invoice data yet.",
+      "availableSectionTitle": "Available requests",
+      "nearbyMobileHint": "For nearby jobs sorted by distance, use the UpKeep mobile app and allow location when prompted. This web view shows city and neighborhood only.",
+      "locationFilterHelp": "Filter jobs by distance from your current location. Allow the browser to use your location when prompted.",
+      "useMyLocation": "Use my location",
+      "clearLocationFilter": "Clear location filter",
+      "radiusLabel": "Search radius",
+      "radiusKm": "{{km}} km",
+      "locationCapturing": "Getting your location…",
+      "locationOk": "Showing nearby jobs",
+      "locationDenied": "Location permission denied",
+      "locationUnavailable": "Could not get your location",
+      "colDistance": "Distance",
+      "distanceKmValue": "{{km}} km",
+      "distanceUnknown": "—",
+      "emptyNearbyHint": "No jobs in this radius. Try a larger radius (25 / 50 / 100 km) or clear the filter.",
+      "colCustomer": "Customer",
+      "colDescription": "Description",
+      "colCityDistrict": "City / neighborhood",
+      "colMapPin": "Map pin",
+      "mapPinYes": "Pinned",
+      "mapPinNo": "No pin",
+      "colService": "Service",
+      "editOffer": "Edit offer",
+      "submitOffer": "Submit offer",
+      "startWork": "Start work",
+      "complete": "Complete",
+      "details": "Details",
+      "emptyTitle": "No requests available",
+      "emptyHint": "You will be notified when new requests arrive",
+      "offerModalTitle": "Submit a quote",
+      "offerAmountLabel": "Amount before tax (SYP)",
+      "offerNoteLabel": "Note for customer (optional)",
+      "offerTaxHint": "Tax is calculated automatically from system settings.",
+      "sendOffer": "Send offer"
+    },
+    "techJs": {
+      "enterValidAmount": "Please enter a valid amount",
+      "offerConfirm": "Send or update the offer for __AMOUNT__ SYP. Continue?",
+      "sessionExpired": "Your session expired or the page redirected unexpectedly. Sign in again and retry.",
+      "offerSendFailed": "Could not send the offer (HTTP __STATUS__)",
+      "offerSent": "Offer sent successfully",
+      "offerFailed": "Could not send the offer",
+      "offerUnexpectedError": "An unexpected error occurred while sending the offer",
+      "startExecutionConfirm": "Start working on this request now?",
+      "startExecutionFailed": "Could not start work",
+      "startExecutionError": "An error occurred while starting work",
+      "completeConfirm": "Are you sure you want to complete this request?",
+      "completeFailed": "Could not complete the request",
+      "completeError": "An error occurred while completing the request"
+    },
+    "profilePage": {
+      "pageTitle": "UpKeep - Profile",
+      "avatarAlt": "Profile photo",
+      "editProfileButton": "Edit profile",
+      "contactHeading": "Contact information",
+      "memberSince": "Member since {{date}}",
+      "editFormTitle": "Edit profile",
+      "fieldNameAr": "Name (Arabic)",
+      "fieldNameEn": "Name (English)",
+      "fieldPhone": "Phone number",
+      "fieldCityOptional": "City (optional)",
+      "fieldDistrictOptional": "District (optional)",
+      "fieldBioOptional": "Short bio (optional)",
+      "fieldProfilePhotoOptional": "Profile photo (optional)",
+      "photoFormatsHint": "Allowed formats: PNG/JPG/JPEG/WEBP — max size 2MB",
+      "fieldSpecialization": "Specialization",
+      "fieldCurrentPassword": "Current password",
+      "passwordLeaveBlankHint": "Leave all password fields empty if you do not want to change your password",
+      "fieldNewPassword": "New password",
+      "newPasswordRulesHint": "At least 8 characters, including uppercase, lowercase, and a number.",
+      "fieldConfirmPassword": "Confirm new password",
+      "cancel": "Cancel",
+      "saveChanges": "Save changes",
+      "statsCustomerTitle": "Request statistics",
+      "statsTotalOrders": "Total requests",
+      "statsCompletedOrders": "Completed requests",
+      "statsPendingOrders": "Pending requests",
+      "statsTechTitle": "Work statistics",
+      "statsSpecialization": "Specialization",
+      "statsCompletedJobs": "Completed jobs",
+      "statsAvgRating": "Average rating",
+      "statsTotalRevenue": "Total revenue ({{currency}})",
+      "statsRatingsCount": "Number of ratings",
+      "unspecifiedSpec": "Not set",
+      "portfolio": {
+        "heading": "Work portfolio",
+        "manageHint": "Show up to {{max}} photos on your public profile (job context). Max {{mb}} MB per image.",
+        "limitReached": "You reached the maximum number of portfolio items.",
+        "addTitle": "Add a portfolio photo",
+        "fieldImage": "Photo",
+        "fieldCaption": "Caption",
+        "fieldCategory": "Category or tag (optional)",
+        "fieldWorkDate": "Job date (optional)",
+        "submitAdd": "Add to portfolio",
+        "emptyOwner": "Add your first project photo so customers can see your work.",
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "delete": "Remove",
+        "deleteConfirm": "Remove this item from your portfolio?"
+      },
+      "js": {
+        "currentPasswordRequired": "Enter your current password first to change it.",
+        "passwordsMismatch": "New password and confirmation do not match.",
+        "passwordTooShort": "Password must be at least 8 characters.",
+        "passwordComplexity": "New password must include uppercase, lowercase, and a number.",
+        "imageTypeUnsupported": "Unsupported image type. Use PNG, JPG, JPEG, or WEBP.",
+        "imageTooLarge": "Image is larger than 2MB."
+      }
+    },
+    "createRequest": {
+      "pageTitle": "UpKeep - New service request",
+      "heading": "New service request",
+      "serviceType": "Service type",
+      "selectService": "Select a service type",
+      "problemDescription": "Problem description",
+      "descriptionPlaceholder": "Describe the problem in detail…",
+      "descriptionHelp": "Please describe the issue clearly so the technician can understand your needs.",
+      "location": "Location",
+      "cityPlaceholder": "City",
+      "districtPlaceholder": "District",
+      "addressPlaceholder": "Full address",
+      "mapPinHelp": "Drag the pin to the exact service location",
+      "mapPinRequired": "Please pin the service location on the map",
+      "mapPinInvalid": "The map pin location is invalid. Move the pin or use your location again.",
+      "useMyLocation": "Use my location",
+      "locationCapturing": "Getting your location…",
+      "locationSetOk": "Location set",
+      "locationDenied": "Permission denied",
+      "locationUnavailable": "Could not get your location. Try again or pin on the map.",
+      "preferredTime": "Preferred time",
+      "selectTime": "Select time",
+      "timeMorning": "Morning (9:00 - 12:00)",
+      "timeAfternoon": "Afternoon (12:00 - 3:00)",
+      "timeEvening": "Evening (3:00 - 6:00)",
+      "extraNotes": "Additional notes",
+      "notesPlaceholder": "Any extra information…",
+      "attachment": "Photo or video of the issue (optional)",
+      "attachmentHelp": "Supported: images (PNG, JPG, WEBP…) or video (MP4, MOV, WEBM) — up to 25 MB.",
+      "termsLead": "I agree to the ",
+      "termsLink": "terms and conditions",
+      "submit": "Submit request",
+      "cancel": "Cancel",
+      "validationDescription": "Please enter a more detailed description (at least 20 characters)."
+    },
+    "trackRequest": {
+      "pageTitle": "UpKeep — Track request #{{id}}",
+      "detailHeading": "Request details #{{id}}",
+      "serviceType": "Service type:",
+      "createdAt": "Created:",
+      "completedAt": "Completed:",
+      "requestStatus": "Request status:",
+      "paymentStatus": "Payment status:",
+      "problemDescription": "Problem description:",
+      "serviceLocation": "Service location",
+      "city": "City",
+      "neighborhood": "Neighborhood",
+      "streetAddress": "Street address",
+      "addressHiddenPending": "The full street address is hidden until you are assigned to this job.",
+      "distanceAway": "{{km}} km away",
+      "showOnMap": "Show on map",
+      "mapPreviewLabel": "Service location on map",
+      "openInMaps": "Open in Google Maps",
+      "openAreaInMaps": "Open area in maps",
+      "attachmentHeading": "Customer attachment:",
+      "attachmentAlt": "Request attachment",
+      "technicianInfo": "Technician:",
+      "timelineHeading": "Request timeline",
+      "timelineCreated": "Request created",
+      "techOfferCard": "Your offer on this request",
+      "yourCurrentOffer": "Your current offer:",
+      "inclTax": "incl. tax",
+      "offerState": "Status:",
+      "updateOffer": "Update offer",
+      "sendOfferBtn": "Send offer",
+      "customerOffersHeading": "Technician offers",
+      "priceBeforeTax": "Price before tax:",
+      "taxLine": "Tax ({{rate}}%):",
+      "totalLine": "Total:",
+      "offerStatusLabel": "Offer status:",
+      "chooseOffer": "Choose this offer",
+      "noOffers": "No offers for this request yet.",
+      "offersPollHint": "If you are waiting for offers, this page refreshes automatically when a new offer arrives.",
+      "invoiceCardHeading": "Tax invoice",
+      "invoiceNumber": "Invoice number:",
+      "subtotal": "Amount before tax:",
+      "taxAmount": "Tax ({{rate}}%):",
+      "grandTotal": "Total:",
+      "invoicePaymentStatus": "Payment status:",
+      "issuedAt": "Issued:",
+      "viewInvoice": "View / print invoice",
+      "paymentHeading": "Payment",
+      "paymentHint": "During work the customer pays the agreed amount (including tax). After payment completes the technician can tap “Complete work”, then the customer can rate.",
+      "cardNumber": "Card number",
+      "expiry": "Expiry date",
+      "cvv": "CVV",
+      "completePayment": "Complete payment",
+      "rateTechnicianHeading": "Rate technician",
+      "ratingLabel": "Rating (1–5)",
+      "rating5": "5 — Excellent",
+      "rating4": "4 — Very good",
+      "rating3": "3 — Good",
+      "rating2": "2 — Fair",
+      "rating1": "1 — Poor",
+      "commentLabel": "Comment (optional)",
+      "submitRating": "Submit rating",
+      "yourRatingHeading": "Your rating",
+      "scoreLine": "Score:",
+      "noComment": "No comment",
+      "actionsHeading": "Actions",
+      "completeWork": "Complete work",
+      "openInvoiceAdmin": "Open request invoice in admin",
+      "backToDashboard": "Back to dashboard",
+      "technicianFallback": "Technician #{{id}}"
+    },
+    "timeline": {
+      "createdByCustomer": "Request created by the customer",
+      "offerSent": "Offer sent or updated by technician {{name}}",
+      "offerChosen": "Customer chose an offer for {{amount}} {{currency}}",
+      "workStarted": "Technician started work (agreed amount: {{amount}} {{currency}})",
+      "workCompleted": "Work marked complete by the technician",
+      "paymentDone": "Payment completed for {{amount}} {{currency}}; tax invoice issued",
+      "ratingAdded": "Customer rated the technician ({{stars}}/5)"
+    },
+    "publicProfile": {
+      "pageTitle": "Profile — request #{{id}}",
+      "heading": "Participant profile",
+      "backToRequest": "Back to request",
+      "bio": "About",
+      "specialization": "Specialization",
+      "rating": "Rating",
+      "phone": "Phone",
+      "cityArea": "City / district",
+      "portfolioHeading": "Work portfolio",
+      "portfolioEmpty": "No portfolio photos yet.",
+      "portfolioOpen": "Open photo",
+      "portfolioPrev": "Previous",
+      "portfolioNext": "Next",
+      "portfolioClose": "Close",
+      "portfolioCaption": "Caption"
+    },
+    "trackJs": {
+      "confirmPayment": "Complete this payment?",
+      "paymentRecordedSuccess": "Payment recorded successfully",
+      "invalidPaymentCard": "Enter a valid 16-digit card number.",
+      "invalidPaymentExpiry": "Enter expiry as MM/YY (e.g. 12/26).",
+      "invalidPaymentCvv": "Enter a 3- or 4-digit security code.",
+      "paymentFailed": "Payment failed",
+      "paymentError": "An error occurred during payment",
+      "completeConfirm": "Complete this request?",
+      "completeFailed": "Could not complete the request",
+      "completeError": "An error occurred while completing the request",
+      "chooseOfferConfirm": "Choose this offer and assign the technician?",
+      "chooseOfferFailed": "Could not choose the offer",
+      "chooseOfferError": "An error occurred while choosing the offer",
+      "enterValidAmount": "Please enter a valid amount",
+      "sendOfferConfirm": "Send this offer now?",
+      "offerSent": "Offer sent successfully",
+      "offerFailed": "Could not send the offer",
+      "offerError": "An error occurred while sending the offer",
+      "submitRatingConfirm": "Submit this rating now?",
+      "ratingFailed": "Could not submit rating",
+      "ratingError": "An error occurred while submitting the rating"
+    },
+    "invoicePage": {
+      "pageTitle": "UpKeep — Invoice {{number}}",
+      "taxInvoice": "Tax invoice",
+      "tagline": "UpKeep — Home maintenance",
+      "issuedAt": "Issued:",
+      "customerBlock": "Customer",
+      "serviceBlock": "Service",
+      "requestRef": "Request #{{id}}",
+      "colItem": "Item",
+      "colTaxRate": "Tax rate",
+      "colAmount": "Amount ({{currency}})",
+      "rowService": "Service cost before tax",
+      "rowVat": "Value added tax",
+      "rowTotal": "Grand total",
+      "paymentStatus": "Payment status:",
+      "demoNote": "This invoice is valid for local use (localhost demo).",
+      "print": "Print invoice",
+      "backToRequest": "Back to request"
+    },
+    "invoicePayment": {
+      "paid": "Paid",
+      "pending": "Pending payment",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    },
+    "admin": {
+      "title": "Admin dashboard",
+      "nav": {
+        "stats": "Statistics",
+        "users": "Users",
+        "requests": "Requests",
+        "invoices": "Invoices",
+        "settings": "Settings",
+        "specs": "Specializations",
+        "logs": "Logs",
+        "back": "Back"
+      },
+      "dashboard": {
+        "heading": "System statistics",
+        "totalRequests": "Total requests",
+        "users": "Users",
+        "completed": "Completed",
+        "pending": "Pending",
+        "avgTechRating": "Average technician rating",
+        "totalRatings": "Total ratings",
+        "revenueCardTitle": "Technician revenue (paid invoices)",
+        "colTechnician": "Technician",
+        "colPaidCount": "Paid invoices count",
+        "colTotalRevenue": "Total revenue ({{currency}})",
+        "colAvgJob": "Average job value ({{currency}})",
+        "colMonthly": "Current month revenue ({{currency}})",
+        "colAvgRating": "Average rating",
+        "colRatingsCount": "Ratings count",
+        "noTechData": "No technicians or paid invoice data yet.",
+        "chartCompletedJobs": "Completed jobs"
+      },
+      "invoices": {
+        "title": "Invoice center",
+        "exportCsv": "Export CSV",
+        "filtersTitle": "Filter invoices",
+        "fromDate": "From date",
+        "toDate": "To date",
+        "paymentStatus": "Payment status",
+        "technician": "Technician",
+        "customer": "Customer",
+        "requestId": "Request ID",
+        "apply": "Apply filters",
+        "reset": "Reset",
+        "subtotalSum": "Subtotal before tax",
+        "taxSum": "Tax collected",
+        "grandSum": "Grand total",
+        "listTitle": "Invoices",
+        "colInvoiceNum": "Invoice #",
+        "colIssued": "Issued",
+        "colRequest": "Request",
+        "colCustomer": "Customer",
+        "colTechnician": "Technician",
+        "colStatus": "Status",
+        "colPreTax": "Pre-tax",
+        "colTax": "Tax",
+        "colTotal": "Total",
+        "unassigned": "Unassigned",
+        "empty": "No invoices match the current filters.",
+        "filterAll": "All",
+        "filterPending": "Pending payment",
+        "filterPaid": "Paid",
+        "filterFailed": "Failed",
+        "filterRefunded": "Refunded"
+      },
+      "requests": {
+        "title": "All requests",
+        "filterAllStatus": "All statuses",
+        "loadFailed": "Could not load requests",
+        "colId": "ID",
+        "colCustomer": "Customer",
+        "colTechnician": "Technician",
+        "colService": "Service",
+        "colStatus": "Status",
+        "colCreated": "Created"
+      },
+      "users": {
+        "title": "Users",
+        "colName": "Name",
+        "colEmail": "Email",
+        "colPhone": "Phone",
+        "colRole": "Role",
+        "colActions": "Actions",
+        "delete": "Delete",
+        "loadFailed": "Could not load users",
+        "confirmDelete": "Delete this user?",
+        "deleteFailed": "Delete failed",
+        "unexpected": "Unexpected error"
+      },
+      "specs": {
+        "title": "Specializations",
+        "placeholderAr": "Arabic name",
+        "placeholderEn": "English name",
+        "add": "Add",
+        "colArabic": "Arabic",
+        "colEnglish": "English",
+        "delete": "Delete",
+        "fillFields": "Fill both fields",
+        "confirmDelete": "Confirm delete?",
+        "deleteFailed": "Delete failed",
+        "unexpected": "Unexpected error"
+      },
+      "settings": {
+        "title": "Settings",
+        "backupTitle": "Database backup",
+        "backupText": "Click the button to create an immediate database backup.",
+        "backupBtn": "Create backup",
+        "restoreTitle": "Restore database",
+        "restoreText": "Choose a backup file (SQL) then click restore.",
+        "restoreBtn": "Restore backup",
+        "backupOk": "Backup created:",
+        "backupFailed": "Backup failed",
+        "pickFile": "Please choose a backup file",
+        "restoreOk": "Restore completed",
+        "restoreFailed": "Restore failed",
+        "unexpected": "Unexpected error"
+      },
+      "logs": {
+        "title": "Audit log",
+        "colAdmin": "Admin",
+        "colAction": "Action",
+        "colTarget": "Target",
+        "colTime": "Time"
+      }
+    },
+    "auth": {
+      "tagline": "Home maintenance request management",
+      "login": {
+        "pageTitle": "UpKeep — Sign in",
+        "email": "Email",
+        "password": "Password",
+        "remember": "Remember me",
+        "forgot": "Forgot password?",
+        "submit": "Sign in",
+        "divider": "or",
+        "google": "Sign in with Google",
+        "footerPrompt": "Don't have an account?",
+        "footerLink": "Create an account"
+      },
+      "signup": {
+        "pageTitle": "UpKeep — Create account",
+        "fullNameAr": "Full name (Arabic)",
+        "fullNameEn": "Full name (English)",
+        "phone": "Phone number",
+        "accountType": "Account type",
+        "selectAccountType": "Select account type",
+        "specialization": "Specialization",
+        "selectSpec": "Select specialization",
+        "passwordHintTitle": "Password must be at least 8 characters and include:",
+        "passwordUpper": "• At least one uppercase letter",
+        "passwordLower": "• At least one lowercase letter",
+        "passwordDigit": "• At least one digit",
+        "submit": "Create account",
+        "hasAccount": "Already have an account?",
+        "loginLink": "Sign in",
+        "strength0": "Very weak",
+        "strength1": "Weak",
+        "strength2": "Medium",
+        "strength3": "Strong",
+        "strength4": "Very strong",
+        "errInvalidEmail": "Please enter a valid email address",
+        "errWeakPassword": "Please choose a stronger password",
+        "errArabicName": "Arabic name must contain Arabic letters",
+        "errEnglishName": "English name must contain Latin letters only",
+        "errPhone": "Please enter a valid Syrian phone number starting with 09",
+        "errAccountType": "Please select an account type",
+        "errSpec": "Please select a specialization for the technician"
+      },
+      "forgot": {
+        "pageTitle": "UpKeep — Forgot password",
+        "subtitle": "Reset password",
+        "intro": "Enter your email and we will open the recovery flow in your browser when available.",
+        "email": "Email",
+        "submit": "Send reset link",
+        "backLogin": "Back to sign in",
+        "remember": "Remember your password?",
+        "signIn": "Sign in"
+      }
+    },
+    "errorPages": {
+      "403": {
+        "title": "Access denied",
+        "body": "You do not have permission to view this page.",
+        "home": "Home",
+        "back": "Go back"
+      },
+      "404": {
+        "title": "Page not found",
+        "body": "Sorry, the page you are looking for does not exist or was moved.",
+        "home": "Home",
+        "back": "Go back"
+      },
+      "500": {
+        "title": "Something went wrong",
+        "body": "An unexpected error occurred. Please try again later.",
+        "home": "Home",
+        "back": "Go back",
+        "reload": "Reload page"
+      }
+    },
+    "errors": {
+      "403": "Access denied",
+      "404": "Page not found",
+      "500": "Something went wrong"
+    }
+  },
+  "labels": {
+    "requestStatusLong": {
+      "pending": "Pending — awaiting offers",
+      "assigned": "Assigned to technician",
+      "in_progress": "In progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "requestStatusShort": {
+      "pending": "Pending",
+      "assigned": "Assigned",
+      "in_progress": "In progress",
+      "completed": "Done",
+      "cancelled": "Cancelled"
+    },
+    "paymentStatus": {
+      "pending": "Pending payment",
+      "processing": "Processing",
+      "completed": "Paid",
+      "paid": "Paid",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    },
+    "offerStatus": {
+      "pending": "Pending review",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "role": {
+      "customer": "Customer",
+      "technician": "Technician",
+      "admin": "Administrator"
+    },
+    "paymentMethod": {
+      "credit_card": "Credit card",
+      "debit_card": "Debit card",
+      "bank_transfer": "Bank transfer",
+      "cash": "Cash",
+      "apple_pay": "Apple Pay",
+      "google_pay": "Google Pay",
+      "mada": "Mada",
+      "stc_pay": "STC Pay",
+      "wallet": "Wallet"
+    }
+  },
+  "home": {
+    "menu": {
+      "openSettings": "Open settings menu",
+      "dismiss": "Close"
+    },
+    "quickGuideTitle": "Quick guide",
+    "quickGuideBody": "A) Customer: My requests → pending request → offers → “Choose this offer”. Technician: Board → quote.\n\nB) After choosing an offer: Invoice → “Complete payment” when payment is done.\n\nC) Technician: “Complete work”. Customer: star rating.\n\nAccount details from the profile icon at the top.",
+    "quickGuideA11y": "Quick guide",
+    "loadFailed": "Could not load requests",
+    "techHintAssigned": "Assigned to you",
+    "techHintOpen": "Open — you can submit a quote",
+    "requestA11y": "Request #{{id}}",
+    "techRequestA11y": "Technician request #{{id}}",
+    "paymentPrefix": "Payment:",
+    "offersCount": "Offers: {{count}}",
+    "offersPendingDetail": "Pending offers on request: {{count}}",
+    "myRequests": "My requests",
+    "a11yOpenMyRequests": "Open my requests",
+    "newRequest": "New request",
+    "a11yCreateRequest": "Create new request",
+    "techBoard": "Technician board",
+    "a11yTechBoard": "Open technician board",
+    "adminBoard": "Administration",
+    "a11yAdminBoard": "Open admin dashboard",
+    "loading": "Loading requests…",
+    "sectionFollowUp": "Track your requests",
+    "followUpHintTitle": "Track your requests",
+    "followUpHintAdmin": "Latest requests in the system — tap a row for details like in “My requests”.",
+    "followUpHintCustomer": "Request and payment status at a glance — tap a row for full details.",
+    "a11yFollowSection": "About this section",
+    "emptyPreviewTitle": "No requests to show here",
+    "emptyPreviewHint": "Go to “My requests”, create a new one, or pull to refresh.",
+    "seeAllMyRequests": "See all in my requests",
+    "a11ySeeAllMyRequests": "See all requests in my requests",
+    "sectionAvailable": "Available requests — submit a quote",
+    "availableHintTitle": "Available requests — submit a quote",
+    "availableHintAdmin": "Pending requests with no assigned technician — admin overview.",
+    "availableHintTech": "Open requests in your specialty — you can submit a quote.",
+    "a11yAvailableSection": "About available requests",
+    "emptyAvailableTitle": "No available requests",
+    "emptyAvailableHint": "Try the technician board or pull to refresh.",
+    "seeAllTech": "See all on technician board",
+    "sectionActiveAdmin": "In progress (assigned)",
+    "sectionActiveTech": "Your active requests",
+    "activeHintTitleAdmin": "In progress (assigned)",
+    "activeHintTitleTech": "Your active requests",
+    "activeHintAdmin": "Requests in assigned or in-progress state.",
+    "activeHintTech": "Requests assigned to you — continue from details.",
+    "a11yActiveSection": "About active requests",
+    "emptyActiveAdmin": "No requests in progress",
+    "emptyActiveTech": "No active requests",
+    "emptyActiveHint": "When work is accepted or assigned it appears here. Pull to refresh.",
+    "btnGoMyRequests": "Go to my requests",
+    "btnCreateService": "Create service request",
+    "btnGoTechBoard": "Go to technician board",
+    "btnGoAdmin": "Go to admin dashboard",
+    "nameFallbackCustomer": "Customer #{{id}}",
+    "nameFallbackUser": "User #{{id}}"
+  },
+  "format": {
+    "currency": "{{amount}} SYP"
+  },
+  "requestTimeline": {
+    "meta": "{{date}} · {{status}}"
+  },
+  "requestDetail": {
+    "city": "City",
+    "neighborhood": "Neighborhood",
+    "streetAddress": "Street address"
+  },
+  "requestDetailScreen": {
+    "addressHiddenPending": "The full street address is hidden until you are assigned to this job.",
+    "mapPreviewLabel": "Service location on map",
+    "showOnMap": "Show on map",
+    "hideMap": "Hide map",
+    "openInMaps": "Open in Maps",
+    "openAreaInMaps": "Open area in maps",
+    "customerInfo": "Customer",
+    "customerPhone": "Customer phone",
+    "customerCityProfile": "City / district (profile)",
+    "offersHeading": "Price offers",
+    "allOffersHeading": "All offers",
+    "offersEmpty": "No offers yet.",
+    "invoicePeekTitle": "Invoice (read-only)",
+    "trackStatusTitle": "Tracking status",
+    "shareInvoice": "View / share invoice",
+    "invoiceModalTitle": "Invoice",
+    "invoiceModalHint": "Invoice number format check:",
+    "invoiceFormatOk": "Valid",
+    "invoiceFormatCheck": "Check the number",
+    "sharePrint": "Share / print (system)",
+    "close": "Close",
+    "shareInvoiceTitle": "UpKeep invoice",
+    "fields": {
+      "requestId": "Request ID",
+      "status": "Request status",
+      "paymentStatus": "Payment status",
+      "serviceType": "Service type",
+      "serviceSpecId": "Specialization ID",
+      "serviceNameAr": "Service name (Arabic)",
+      "serviceNameEn": "Service name (English)",
+      "serviceMissing": "No service details",
+      "description": "Description",
+      "preferredDate": "Preferred date",
+      "preferredTime": "Preferred time",
+      "notes": "Notes",
+      "createdAt": "Created",
+      "completedAt": "Completed",
+      "technicianId": "Technician ID",
+      "customerId": "Customer ID",
+      "trackStatus": "Tracking status",
+      "trackPaymentStatus": "Payment status (tracking)",
+      "offersCount": "Offers count",
+      "offersAmountSum": "Offers total"
+    },
+    "invoice": {
+      "title": "Invoice",
+      "invoiceId": "Invoice ID",
+      "requestId": "Request ID",
+      "offerId": "Offer ID",
+      "invoiceNumber": "Invoice number",
+      "subtotal": "Subtotal (before tax)",
+      "taxRate": "Tax rate",
+      "taxAmount": "Tax amount",
+      "total": "Total",
+      "paymentStatus": "Invoice payment status",
+      "issuedAt": "Issued date"
+    },
+    "invoiceShare": {
+      "header": "UpKeep — tax invoice",
+      "invoiceNumber": "Invoice number",
+      "subtotal": "Subtotal (before tax)",
+      "taxRate": "Tax rate %",
+      "taxAmount": "Tax amount",
+      "total": "Total",
+      "paymentStatus": "Invoice payment status",
+      "issuedAt": "Issued date"
+    },
+    "payment": {
+      "sectionTitle": "Latest payment",
+      "paymentId": "Payment ID",
+      "amount": "Amount",
+      "method": "Payment method",
+      "status": "Status",
+      "transactionId": "Transaction ID",
+      "createdAt": "Created"
+    },
+    "rating": {
+      "title": "Rating",
+      "ratingId": "Rating ID",
+      "stars": "Stars",
+      "comment": "Comment",
+      "createdAt": "Created"
+    },
+    "offer": {
+      "displayTitle": "Offer #{{id}}",
+      "technician": "Technician",
+      "specialization": "Specialization",
+      "techPhone": "Technician phone",
+      "cityDistrict": "City / district",
+      "bio": "Bio",
+      "amountBeforeTax": "Amount before tax",
+      "taxWithRate": "Tax ({{rate}}%)",
+      "total": "Total",
+      "status": "Status",
+      "techNote": "Technician note",
+      "offerDate": "Offer date",
+      "ratingNone": "Average rating: no ratings yet",
+      "ratingLine": "Average rating: {{avg}} ★ ({{ratingsCount}} ratings)",
+      "chooseThis": "Choose this offer"
+    }
+  },
+  "technicianRequests": {
+    "specBanner": "Specialization: {{spec}}",
+    "bannerHint": "Open requests in your specialty and your assignments — filter by status or pull to refresh.",
+    "techHintOpenSpecialty": "Open — your specialty"
+  },
+  "adminInvoices": {
+    "title": "Admin invoices",
+    "subtotal": "Before tax",
+    "tax": "Tax",
+    "grandTotal": "Grand total",
+    "filters": "Filters",
+    "exportCsvTitle": "Export CSV",
+    "exportOpenFailed": "Could not open the export link.",
+    "loadFailed": "Could not load invoices",
+    "openExport": "Open CSV export",
+    "loading": "Loading invoices…",
+    "noMatches": "No invoices match the filters.",
+    "requestLine": "Request #{{id}}",
+    "customerLine": "Customer: {{name}}",
+    "technicianLine": "Technician: {{name}}",
+    "technicianUnassigned": "Unassigned",
+    "dateLine": "Date: {{date}}",
+    "amountLine": "Total: {{total}} (tax: {{tax}})",
+    "phRequestId": "Request ID (optional)",
+    "phCustomerId": "Customer ID (optional)",
+    "phTechnicianId": "Technician ID (optional)"
+  },
+  "location": {
+    "permission": "Allow location access to see nearby requests and distance.",
+    "denied": "Location permission was denied. Enable it in device settings to use nearby requests.",
+    "unavailable": "Could not determine your location. Check that location services are enabled."
+  },
+  "apiErrors": {
+    "hostNotSet": "Server address is not configured. Check app settings and restart.",
+    "hostInvalid": "Server address is invalid. Check EXPO_PUBLIC_API_URL in .env.",
+    "notLoggedIn": "Not signed in",
+    "sessionExpired": "Session expired"
+  },
+  "network": {
+    "unreachable": "Could not reach the server. Check your network and that the server is running."
+  }
+}

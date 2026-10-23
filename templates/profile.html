@@ -1,0 +1,532 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t('web.profilePage.pageTitle') }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <!-- Profile Card -->
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    {% if user.profile_image %}
+                    <img src="{{ url_for('static', filename=user.profile_image) }}"
+                         alt="{{ t('web.profilePage.avatarAlt') }}"
+                         class="rounded-circle border"
+                         style="width: 120px; height: 120px; object-fit: cover;">
+                    {% else %}
+                    <i class="fas fa-user-circle fa-5x text-secondary"></i>
+                    {% endif %}
+                </div>
+                {% if locale == 'en' %}
+                <h5 class="mb-1">{{ name_en or name_ar }}</h5>
+                <p class="text-muted mb-1">{{ name_ar if name_en else '' }}</p>
+                {% else %}
+                <h5 class="mb-1">{{ name_ar or name_en }}</h5>
+                <p class="text-muted mb-1">{{ name_en if name_ar else '' }}</p>
+                {% endif %}
+                <p class="text-muted mb-3">
+                    {% if user.role == 'customer' %}
+                        {{ t('roles.customer') }}
+                    {% elif user.role == 'technician' %}
+                        {{ t('roles.technician') }}
+                        {% if user.specialization %}
+                        — {{ service_label(user.specialization) }}
+                        {% endif %}
+                    {% else %}
+                        {{ t('roles.admin') }}
+                    {% endif %}
+                </p>
+                <div class="d-grid">
+                    <button class="btn btn-outline-primary" onclick="toggleEditMode()">
+                        <i class="fas fa-edit me-1"></i>
+                        {{ t('web.profilePage.editProfileButton') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.profilePage.contactHeading') }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-2">
+                    <i class="fas fa-envelope me-2 text-primary"></i>
+                    {{ user.email }}
+                </p>
+                <p class="mb-2">
+                    <i class="fas fa-phone me-2 text-primary"></i>
+                    {{ user.phone }}
+                </p>
+                <p class="mb-0">
+                    <i class="fas fa-calendar me-2 text-primary"></i>
+                    {{ t('web.profilePage.memberSince', date=user.created_at.strftime('%Y-%m-%d')) }}
+                </p>
+            </div>
+        </div>
+
+        <div class="card mt-4" id="language-settings">
+            <div class="card-header bg-white border-0 pb-0">
+                <h5 class="mb-0" id="settings-card-title">Settings</h5>
+                <p class="small text-muted mb-0 mt-1" id="settings-language-line">Language</p>
+            </div>
+            <div class="card-body pt-2">
+                <div id="upkeep-lang-status" class="visually-hidden" role="status" aria-live="polite"></div>
+                <div class="upkeep-lang-selector" role="radiogroup" aria-labelledby="settings-language-line">
+                    <label class="upkeep-lang-option">
+                        <input type="radio" name="upkeep-app-lang" value="en" class="visually-hidden upkeep-lang-input">
+                        <span class="upkeep-lang-label">English</span>
+                        <i class="fas fa-check upkeep-lang-check" aria-hidden="true"></i>
+                    </label>
+                    <label class="upkeep-lang-option">
+                        <input type="radio" name="upkeep-app-lang" value="ar" class="visually-hidden upkeep-lang-input">
+                        <span class="upkeep-lang-label">العربية</span>
+                        <i class="fas fa-check upkeep-lang-check" aria-hidden="true"></i>
+                    </label>
+                </div>
+                <p class="small text-muted mt-3 mb-0" id="settings-lang-hint"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <!-- Profile Edit Form -->
+        <div class="card mb-4" id="editForm" style="display: none;">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.profilePage.editFormTitle') }}</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('update_profile') }}" id="profileForm" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">{{ t('web.profilePage.fieldNameAr') }}</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="full_name_ar"
+                                   value="{{ name_ar }}"
+                                   required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">{{ t('web.profilePage.fieldNameEn') }}</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="full_name_en"
+                                   value="{{ name_en }}"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.profilePage.fieldPhone') }}</label>
+                        <input type="tel"
+                               class="form-control"
+                               name="phone"
+                               value="{{ user.phone }}"
+                               required>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">{{ t('web.profilePage.fieldCityOptional') }}</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="city"
+                                   value="{{ user.city or '' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">{{ t('web.profilePage.fieldDistrictOptional') }}</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="district"
+                                   value="{{ user.district or '' }}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.profilePage.fieldBioOptional') }}</label>
+                        <textarea class="form-control" name="bio" rows="3">{{ user.bio or '' }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.profilePage.fieldProfilePhotoOptional') }}</label>
+                        <input type="file"
+                               class="form-control"
+                               name="profile_image"
+                               accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp">
+                        <div class="form-text">{{ t('web.profilePage.photoFormatsHint') }}</div>
+                    </div>
+
+                    {% if user.role == 'technician' %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.profilePage.fieldSpecialization') }}</label>
+                        <select class="form-select" name="specialization">
+                            {% for spec in specializations %}
+                            <option value="{{ spec.spec_id }}"
+                                    {% if user.specialization_id == spec.spec_id %}selected{% endif %}>
+                                {{ service_label(spec) }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.profilePage.fieldCurrentPassword') }}</label>
+                        <input type="password"
+                               class="form-control"
+                               name="current_password">
+                        <div class="form-text">{{ t('web.profilePage.passwordLeaveBlankHint') }}</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.profilePage.fieldNewPassword') }}</label>
+                        <input type="password"
+                               class="form-control"
+                               name="new_password"
+                               minlength="8">
+                        <div class="form-text">{{ t('web.profilePage.newPasswordRulesHint') }}</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.profilePage.fieldConfirmPassword') }}</label>
+                        <input type="password"
+                               class="form-control"
+                               name="confirm_password">
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="button"
+                                class="btn btn-outline-secondary me-2"
+                                onclick="toggleEditMode()">
+                            {{ t('web.profilePage.cancel') }}
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            {{ t('web.profilePage.saveChanges') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        {% if user.role == 'customer' %}
+        <!-- Customer Statistics -->
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.profilePage.statsCustomerTitle') }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="text-center mb-4">
+                            <h3 class="text-primary">{{ user.requests_as_customer|length }}</h3>
+                            <p class="mb-0">{{ t('web.profilePage.statsTotalOrders') }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="text-center mb-4">
+                            <h3 class="text-success">
+                                {{ user.requests_as_customer|selectattr('status', 'equalto', 'completed')|list|length }}
+                            </h3>
+                            <p class="mb-0">{{ t('web.profilePage.statsCompletedOrders') }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="text-center mb-4">
+                            <h3 class="text-warning">
+                                {{ user.requests_as_customer|selectattr('status', 'equalto', 'pending')|list|length }}
+                            </h3>
+                            <p class="mb-0">{{ t('web.profilePage.statsPendingOrders') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% elif user.role == 'technician' %}
+        <!-- Technician Statistics -->
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.profilePage.statsTechTitle') }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="text-center mb-4">
+                            <h3 class="text-primary">{{ service_label(user.specialization) if user.specialization else t('web.profilePage.unspecifiedSpec') }}</h3>
+                            <p class="mb-0">{{ t('web.profilePage.statsSpecialization') }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-center mb-4">
+                            <h3 class="text-success">
+                                {{ completed_jobs_count }}
+                            </h3>
+                            <p class="mb-0">{{ t('web.profilePage.statsCompletedJobs') }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-center mb-4">
+                            <h3 class="text-dark">{{ avg_rating if avg_rating is not none else '—' }}</h3>
+                            <p class="mb-0">{{ t('web.profilePage.statsAvgRating') }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-center mb-4">
+                            <h3 class="text-warning">{{ total_revenue }}</h3>
+                            <p class="mb-0">{{ t('web.profilePage.statsTotalRevenue', currency=t('web.currencySuffix')) }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="text-center mb-4">
+                            <h3 class="text-primary">{{ ratings_count }}</h3>
+                            <p class="mb-0">{{ t('web.profilePage.statsRatingsCount') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.profilePage.portfolio.heading') }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted small mb-3">{{ t('web.profilePage.portfolio.manageHint', max=portfolio_limits.max_items, mb=(portfolio_limits.max_image_bytes // (1024 * 1024))) }}</p>
+
+                {% if portfolio_rows|length >= portfolio_limits.max_items %}
+                <div class="alert alert-secondary mb-3" role="status">{{ t('web.profilePage.portfolio.limitReached') }}</div>
+                {% endif %}
+
+                <form method="post"
+                      action="{{ url_for('profile_portfolio_add') }}"
+                      enctype="multipart/form-data"
+                      class="mb-4 border rounded p-3 bg-light">
+                    <h6 class="mb-3">{{ t('web.profilePage.portfolio.addTitle') }}</h6>
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.profilePage.portfolio.fieldImage') }}</label>
+                        <input type="file"
+                               name="image"
+                               class="form-control"
+                               accept=".png,.jpg,.jpeg,.webp,.gif,image/*"
+                               {% if portfolio_rows|length >= portfolio_limits.max_items %}disabled{% endif %}
+                               required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ t('web.profilePage.portfolio.fieldCaption') }}</label>
+                        <textarea name="caption"
+                                  class="form-control"
+                                  rows="2"
+                                  maxlength="{{ portfolio_limits.caption_max_len }}"
+                                  required
+                                  {% if portfolio_rows|length >= portfolio_limits.max_items %}disabled{% endif %}></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">{{ t('web.profilePage.portfolio.fieldCategory') }}</label>
+                            <input type="text"
+                                   name="category"
+                                   class="form-control"
+                                   maxlength="{{ portfolio_limits.category_max_len }}"
+                                   {% if portfolio_rows|length >= portfolio_limits.max_items %}disabled{% endif %}>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">{{ t('web.profilePage.portfolio.fieldWorkDate') }}</label>
+                            <input type="date"
+                                   name="work_date"
+                                   class="form-control"
+                                   {% if portfolio_rows|length >= portfolio_limits.max_items %}disabled{% endif %}>
+                        </div>
+                    </div>
+                    <button type="submit"
+                            class="btn btn-primary"
+                            {% if portfolio_rows|length >= portfolio_limits.max_items %}disabled{% endif %}>
+                        {{ t('web.profilePage.portfolio.submitAdd') }}
+                    </button>
+                </form>
+
+                {% if portfolio_rows|length == 0 %}
+                <p class="text-muted mb-0">{{ t('web.profilePage.portfolio.emptyOwner') }}</p>
+                {% else %}
+                <div class="row row-cols-1 row-cols-md-2 g-3">
+                    {% for row in portfolio_rows %}
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="ratio ratio-4x3 bg-light">
+                                <img src="{{ url_for('static', filename=row.media_path) }}"
+                                     alt=""
+                                     class="object-fit-cover rounded-top"
+                                     style="object-fit: cover;"
+                                     loading="lazy">
+                            </div>
+                            <div class="card-body py-2">
+                                <p class="card-text small mb-2">{{ row.caption }}</p>
+                                {% if row.category %}
+                                <p class="small text-muted mb-1">{{ row.category }}</p>
+                                {% endif %}
+                                {% if row.work_date %}
+                                <p class="small text-muted mb-2">{{ row.work_date }}</p>
+                                {% endif %}
+                                <div class="d-flex flex-wrap gap-1">
+                                    <form method="post" action="{{ url_for('profile_portfolio_move', item_id=row.portfolio_item_id, direction='up') }}" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary" aria-label="{{ t('web.profilePage.portfolio.moveUp') }}"><i class="fas fa-arrow-up"></i></button>
+                                    </form>
+                                    <form method="post" action="{{ url_for('profile_portfolio_move', item_id=row.portfolio_item_id, direction='down') }}" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary" aria-label="{{ t('web.profilePage.portfolio.moveDown') }}"><i class="fas fa-arrow-down"></i></button>
+                                    </form>
+                                    <form method="post"
+                                          action="{{ url_for('profile_portfolio_delete', item_id=row.portfolio_item_id) }}"
+                                          class="d-inline"
+                                          onsubmit="return confirm(window.__PORTFOLIO_DELETE_CONFIRM__ || 'OK');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" aria-label="{{ t('web.profilePage.portfolio.delete') }}"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<script>window.__PORTFOLIO_DELETE_CONFIRM__ = {{ t('web.profilePage.portfolio.deleteConfirm')|tojson }};</script>
+<script type="application/json" id="profile-page-i18n">{{ {
+  'currentPasswordRequired': t('web.profilePage.js.currentPasswordRequired'),
+  'passwordsMismatch': t('web.profilePage.js.passwordsMismatch'),
+  'passwordTooShort': t('web.profilePage.js.passwordTooShort'),
+  'passwordComplexity': t('web.profilePage.js.passwordComplexity'),
+  'imageTypeUnsupported': t('web.profilePage.js.imageTypeUnsupported'),
+  'imageTooLarge': t('web.profilePage.js.imageTooLarge')
+} | tojson }}</script>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleEditMode() {
+    const editForm = document.getElementById('editForm');
+    editForm.style.display = editForm.style.display === 'none' ? 'block' : 'none';
+}
+
+(function () {
+  var profileI18nEl = document.getElementById('profile-page-i18n');
+  var MSG = profileI18nEl ? JSON.parse(profileI18nEl.textContent) : {};
+
+document.getElementById('profileForm').addEventListener('submit', async function(e) {
+    const currentPassword = document.querySelector('input[name="current_password"]').value;
+    const newPassword = document.querySelector('input[name="new_password"]').value;
+    const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+    const profileImageInput = document.querySelector('input[name="profile_image"]');
+
+    if ((newPassword || confirmPassword) && !currentPassword) {
+        e.preventDefault();
+        await showAppAlert(MSG.currentPasswordRequired || '');
+        return false;
+    }
+
+    if (newPassword && newPassword !== confirmPassword) {
+        e.preventDefault();
+        await showAppAlert(MSG.passwordsMismatch || '');
+        return false;
+    }
+
+    if (newPassword && newPassword.length < 8) {
+        e.preventDefault();
+        await showAppAlert(MSG.passwordTooShort || '');
+        return false;
+    }
+
+    if (newPassword) {
+        const hasUpper = /[A-Z]/.test(newPassword);
+        const hasLower = /[a-z]/.test(newPassword);
+        const hasDigit = /[0-9]/.test(newPassword);
+        if (!hasUpper || !hasLower || !hasDigit) {
+            e.preventDefault();
+            await showAppAlert(MSG.passwordComplexity || '');
+            return false;
+        }
+    }
+
+    if (profileImageInput && profileImageInput.files && profileImageInput.files.length > 0) {
+        const file = profileImageInput.files[0];
+        const allowed = ['image/png', 'image/jpeg', 'image/webp'];
+        const maxBytes = 2 * 1024 * 1024;
+        if (!allowed.includes(file.type)) {
+            e.preventDefault();
+            await showAppAlert(MSG.imageTypeUnsupported || '');
+            return false;
+        }
+        if (file.size > maxBytes) {
+            e.preventDefault();
+            await showAppAlert(MSG.imageTooLarge || '');
+            return false;
+        }
+    }
+});
+})();
+</script>
+<script>
+(function () {
+  function waitI18n(cb, tries) {
+    tries = tries || 0;
+    if (window.i18next && i18next.isInitialized && window.UpkeepLocale) return cb();
+    if (tries > 120) return cb();
+    setTimeout(function () { waitI18n(cb, tries + 1); }, 40);
+  }
+
+  function syncLangRadios() {
+    var root = document.querySelector('.upkeep-lang-selector');
+    if (!root || !window.UpkeepLocale) return;
+    var cur = UpkeepLocale.getCurrentLanguage();
+    root.querySelectorAll('.upkeep-lang-option').forEach(function (label) {
+      var inp = label.querySelector('input');
+      if (!inp) return;
+      var on = inp.value === cur;
+      inp.checked = on;
+      label.classList.toggle('upkeep-lang-option--active', on);
+    });
+  }
+
+  function initProfileLanguageCard() {
+    waitI18n(function () {
+      var title = document.getElementById('settings-card-title');
+      var line = document.getElementById('settings-language-line');
+      var hint = document.getElementById('settings-lang-hint');
+      if (title) title.textContent = i18next.t('settings.title');
+      if (line) line.textContent = i18next.t('settings.language');
+      if (hint) hint.textContent = i18next.t('settings.hint');
+
+      var root = document.querySelector('.upkeep-lang-selector');
+      if (!root) return;
+
+      syncLangRadios();
+
+      root.addEventListener('change', function (e) {
+        var target = e.target;
+        if (!target || target.name !== 'upkeep-app-lang') return;
+        var next = target.value;
+        if (next !== 'en' && next !== 'ar') return;
+        var status = document.getElementById('upkeep-lang-status');
+        syncLangRadios();
+        Promise.resolve(UpkeepLocale.setLanguage(next)).then(function () {
+          if (status) {
+            var name = next === 'en' ? i18next.t('settings.english') : i18next.t('settings.arabic');
+            status.textContent = i18next.t('settings.selected') + ': ' + name;
+          }
+          window.location.reload();
+        });
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProfileLanguageCard);
+  } else {
+    initProfileLanguageCard();
+  }
+})();
+</script>
+{% endblock %}

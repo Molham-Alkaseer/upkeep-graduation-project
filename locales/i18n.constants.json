@@ -1,0 +1,7 @@
+{
+  "STORAGE_KEY": "upkeep.locale",
+  "DEFAULT_LANGUAGE": "en",
+  "FALLBACK_LANGUAGE": "en",
+  "DEFAULT_NAMESPACE": "common",
+  "NAMESPACES": ["common"]
+}

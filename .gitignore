@@ -1,0 +1,40 @@
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+
+# Python environments and generated files
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# JavaScript dependencies and build output
+node_modules/
+.expo/
+dist/
+build/
+
+# Local data and uploaded user content
+backup_*.sql
+*.db
+*.sqlite
+*.sqlite3
+instance/
+static/uploads/
+
+# Editor, operating system, and temporary files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+tempCodeRunnerFile.py
+/None
+/3.0

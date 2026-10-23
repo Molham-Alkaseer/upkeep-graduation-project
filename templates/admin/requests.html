@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('web.admin.requests.title') }}{% endblock %}
+
+{% block extra_css %}<style>.table-wrapper{overflow-x:auto;}</style>{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-md-2 sidebar d-none d-md-block">
+            <ul class="nav flex-column pt-4">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">{{ t('web.admin.nav.back') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.specs_page') }}">{{ t('web.admin.nav.specs') }}</a></li>
+                {% if current_user.role == 'admin' %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.logs_page') }}">{{ t('web.admin.nav.logs') }}</a></li>
+                {% endif %}
+            </ul>
+        </aside>
+        <section class="col-md-10 p-4">
+            <h2 class="mb-4">{{ t('web.admin.requests.title') }}</h2>
+            <div class="mb-3">
+                <select class="form-select w-auto d-inline" id="statusFilter">
+                    <option value="">{{ t('web.admin.requests.filterAllStatus') }}</option>
+                    <option value="pending">{{ t('web.status.request.pending') }}</option>
+                    <option value="assigned">{{ t('web.status.request.assigned') }}</option>
+                    <option value="in_progress">{{ t('web.status.request.in_progress') }}</option>
+                    <option value="completed">{{ t('web.status.request.completed') }}</option>
+                    <option value="cancelled">{{ t('web.status.request.cancelled') }}</option>
+                </select>
+            </div>
+            <div class="table-wrapper">
+                <table class="table table-bordered align-middle" id="reqTable">
+                    <thead>
+                        <tr>
+                            <th>{{ t('web.admin.requests.colId') }}</th>
+                            <th>{{ t('web.admin.requests.colCustomer') }}</th>
+                            <th>{{ t('web.admin.requests.colTechnician') }}</th>
+                            <th>{{ t('web.admin.requests.colService') }}</th>
+                            <th>{{ t('web.admin.requests.colStatus') }}</th>
+                            <th>{{ t('web.admin.requests.colCreated') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="application/json" id="admin-req-i18n">{{ {'loadFailed': t('web.admin.requests.loadFailed')}|tojson }}</script>
+<script>
+const ADM_REQ = JSON.parse(document.getElementById('admin-req-i18n').textContent);
+let dataCache = [];
+async function loadRequests() {
+    try {
+        const res = await fetch('/admin/api/requests');
+        dataCache = await res.json();
+        renderRows();
+    } catch(err){
+        console.error(err);
+        showAppAlert(ADM_REQ.loadFailed);
+    }
+}
+function renderRows(){
+    const filter = document.getElementById('statusFilter').value;
+    const tbody = document.querySelector('#reqTable tbody');
+    tbody.innerHTML='';
+    dataCache.filter(r=>!filter||r.status===filter).forEach(r=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${r.id}</td><td>${r.customer||''}</td><td>${r.technician||''}</td><td>${r.service||''}</td><td>${r.status}</td><td>${r.created_at}</td>`;
+        tbody.appendChild(tr);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    loadRequests();
+    document.getElementById('statusFilter').addEventListener('change', renderRows);
+});
+</script>
+{% endblock %}

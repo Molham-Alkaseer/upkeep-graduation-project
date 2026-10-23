@@ -1,0 +1,1115 @@
+{
+  "meta": {
+    "appName": "UpKeep"
+  },
+  "nav": {
+    "login": "دخول",
+    "register": "إنشاء حساب",
+    "home": "الرئيسية",
+    "profile": "الملف الشخصي",
+    "editProfile": "تعديل الملف",
+    "languageSettings": "اللغة",
+    "myRequests": "طلباتي",
+    "requestSectionTitle": "الطلب",
+    "requestDetail": "تفاصيل الطلب",
+    "newRequest": "طلب جديد",
+    "technicianBoard": "لوحة الفني",
+    "admin": "الإدارة",
+    "adminInvoices": "فواتير الإدارة",
+    "languageQuick": "اللغة والمنطقة",
+    "logout": "تسجيل الخروج"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "language": "اللغة",
+    "languageDescription": "لغة العرض واتجاه الصفحة",
+    "english": "English",
+    "arabic": "العربية",
+    "hint": "يُحفظ على هذا الجهاز. تُعاد تحميل الصفحة عند تغيير اللغة.",
+    "selected": "المحدد",
+    "applyLanguage": "استخدام {{name}}"
+  },
+  "roles": {
+    "customer": "عميل",
+    "technician": "فني",
+    "admin": "مسؤول"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "editProfile": "تعديل الملف الشخصي",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الجوال",
+    "city": "المدينة",
+    "district": "المنطقة",
+    "specialization": "التخصص",
+    "avgRating": "متوسط التقييم",
+    "joined": "تاريخ الانضمام",
+    "ratingSummary": "{{avg}} / 5 — {{count}} تقييم",
+    "ratingSummaryEmpty": "— — {{count}} تقييم",
+    "emptyField": "—",
+    "settingsSection": "الإعدادات",
+    "openLanguage": "اللغة",
+    "openLanguageHint": "English أو العربية",
+    "a11yEdit": "تعديل الملف الشخصي",
+    "a11yLogout": "تسجيل الخروج",
+    "a11yLanguage": "فتح إعدادات اللغة"
+  },
+  "publicProfile": {
+    "titleTechnician": "ملف الفني",
+    "titleCustomer": "ملف العميل",
+    "bio": "نبذة",
+    "specialization": "التخصص",
+    "rating": "التقييم",
+    "phone": "الجوال",
+    "cityArea": "المدينة / الحي",
+    "a11yOpenTechnician": "فتح ملف الفني",
+    "a11yOpenCustomer": "فتح ملف العميل",
+    "loadError": "تعذر تحميل الملف",
+    "portfolioHeading": "معرض الأعمال",
+    "portfolioEmpty": "لا توجد صور في المعرض بعد.",
+    "portfolioOpenImage": "فتح عنصر {{index}} من {{total}} في المعرض",
+    "portfolioClose": "إغلاق المعرض",
+    "portfolioPrev": "الصورة السابقة",
+    "portfolioNext": "الصورة التالية"
+  },
+  "portfolio": {
+    "manageTitle": "معرض الأعمال",
+    "manageSubtitle": "صور تظهر في ملفك العام (نفس الحدود في كل المنصات).",
+    "openManage": "إدارة المعرض",
+    "addPhoto": "إضافة صورة",
+    "captionLabel": "وصف قصير",
+    "captionPlaceholder": "وصف مختصر (مطلوب)",
+    "categoryLabel": "تصنيف (اختياري)",
+    "workDateLabel": "تاريخ العمل (اختياري)",
+    "pickImage": "اختيار صورة",
+    "submitAdd": "رفع",
+    "uploading": "جاري الرفع…",
+    "loadError": "تعذر تحميل المعرض",
+    "saveError": "تعذر الحفظ",
+    "delete": "حذف",
+    "deleteConfirm": "إزالة هذه الصورة من المعرض؟",
+    "moveUp": "لأعلى",
+    "moveDown": "لأسفل",
+    "emptyOwner": "أضف أول صورة — سيظهر عملاؤها في ملفك.",
+    "limitReached": "وصلت إلى الحد الأقصى لعدد الصور.",
+    "hintLimits": "حتى {{maxItems}} عنصر · {{maxMb}} ميغابايت لكل صورة",
+    "saveItem": "حفظ التعديلات"
+  },
+  "errors": {
+    "accountLoadFailed": "تعذر تحميل الحساب",
+    "loadFailed": "تعذر التحميل",
+    "retry": "إعادة المحاولة"
+  },
+  "filters": {
+    "all": "الكل"
+  },
+  "technicianNearby": {
+    "locationDeniedBanner": "الموقع غير مفعّل — نعرض الطلبات المفتوحة بدون مسافة. فعّل الموقع لرؤية الطلبات القريبة مرتبة حسب البعد.",
+    "enableLocationLink": "فتح إعدادات الموقع",
+    "radiusKm": "{{km}} كم",
+    "distanceAway": "على بعد {{distance}}",
+    "kmUnit": "كم",
+    "emptyNearby": "لا توجد طلبات ضمن هذا النطاق",
+    "emptyNearbyHint": "جرّب توسيع النطاق (25 / 50 / 100 كم) أو اسحب للتحديث.",
+    "noPinOnRequest": "بدون موقع على الخريطة",
+    "outsideRadiusMore": "{{count}} طلب/طلبات مفتوحة أبعد من {{km}} كم — وسّع النطاق لعرضها"
+  },
+  "customerCreateRequest": {
+    "mapSectionTitle": "حدّد موقع الخدمة على الخريطة",
+    "useMyLocation": "استخدم موقعي",
+    "pinRequired": "يُرجى تحديد موقع الخدمة على الخريطة",
+    "locationCapturing": "جاري تحديد موقعك…",
+    "locationOk": "تم تحديد موقع الخدمة على الخريطة",
+    "locationDenied": "تم رفض إذن الموقع. حدّد الموقع على الخريطة يدوياً.",
+    "locationError": "تعذر تحديد موقعك. أعد المحاولة أو حدّد الموقع على الخريطة."
+  },
+  "emptyStates": {
+    "requestListTitle": "لا توجد طلبات",
+    "requestListHint": "جرّب تغيير التصفية أو اسحب للتحديث."
+  },
+  "dialog": {
+    "title": {
+      "alert": "تنبيه",
+      "error": "خطأ",
+      "success": "تم",
+      "soon": "قريباً"
+    },
+    "button": {
+      "ok": "حسناً",
+      "cancel": "إلغاء"
+    }
+  },
+  "login": {
+    "form": {
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "example@email.com"
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "placeholder": "********"
+      },
+      "remember": {
+        "label": "تذكرني"
+      },
+      "forgot": {
+        "link": "نسيت كلمة المرور؟"
+      },
+      "submit": {
+        "label": "تسجيل الدخول"
+      }
+    },
+    "divider": {
+      "or": "أو"
+    },
+    "oauth": {
+      "google": {
+        "label": "سجّل الدخول باستخدام Google",
+        "disabledMessage": "تسجيل الدخول عبر Google غير مفعّل في التطبيق حالياً."
+      }
+    },
+    "footer": {
+      "noAccount": "ليس لديك حساب؟",
+      "registerLink": "أنشئ حساب جديد"
+    },
+    "validation": {
+      "missingCredentials": "يرجى إدخال البريد وكلمة المرور"
+    },
+    "error": {
+      "genericFallback": "فشل تسجيل الدخول"
+    },
+    "forgot": {
+      "configureServer": "اضبط عنوان الخادم في إعدادات التطبيق أولاً لاستخدام استعادة كلمة المرور من المتصفح.",
+      "openUrlFailed": "تعذر فتح الرابط. جرّب من المتصفح على نفس شبكة الخادم."
+    },
+    "a11y": {
+      "emailField": "البريد الإلكتروني",
+      "passwordField": "كلمة المرور",
+      "remember": "تذكرني",
+      "forgot": "نسيت كلمة المرور",
+      "google": "تسجيل الدخول باستخدام Google"
+    }
+  },
+  "register": {
+    "loading": {
+      "specs": "جاري تحميل التخصصات…"
+    },
+    "banner": {
+      "loadFailed": {
+        "title": "تعذر تحميل التخصصات"
+      }
+    },
+    "accountType": {
+      "section": {
+        "label": "نوع الحساب"
+      },
+      "customer": {
+        "label": "عميل",
+        "a11y": "عميل"
+      },
+      "technician": {
+        "label": "فني صيانة",
+        "a11y": "فني صيانة"
+      }
+    },
+    "specialization": {
+      "section": {
+        "label": "تخصص الفني"
+      },
+      "pullHint": "اسحب للأسفل لإعادة المحاولة",
+      "emptyState": "لم نتمكن من تحميل التخصصات. اسحب للتحديث أو جرّب لاحقاً."
+    },
+    "form": {
+      "fullNameAr": {
+        "label": "الاسم الكامل بالعربية",
+        "placeholder": "الاسم كما يظهر بالعربية",
+        "a11y": "الاسم الكامل بالعربية"
+      },
+      "fullNameEn": {
+        "label": "الاسم الكامل بالإنجليزية",
+        "placeholder": "Full name (English)",
+        "a11y": "الاسم الكامل بالإنجليزية"
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "example@domain.com",
+        "a11y": "البريد الإلكتروني"
+      },
+      "phone": {
+        "label": "رقم الجوال",
+        "placeholder": "09xxxxxxxx",
+        "a11y": "رقم الجوال"
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "placeholder": "••••••••",
+        "a11y": "كلمة المرور",
+        "strength": {
+          "veryWeak": "ضعيف جداً",
+          "weak": "ضعيف",
+          "medium": "متوسط",
+          "strong": "قوي"
+        },
+        "requirements": {
+          "intro": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وتحتوي على:",
+          "upper": "• حرف كبير واحد على الأقل",
+          "lower": "• حرف صغير واحد على الأقل",
+          "digit": "• رقم واحد على الأقل"
+        }
+      },
+      "submit": {
+        "label": "إنشاء حساب"
+      }
+    },
+    "footer": {
+      "hasAccount": "لديك حساب بالفعل؟",
+      "loginLink": "تسجيل الدخول"
+    },
+    "validation": {
+      "namesBoth": "يرجى إدخال الاسم الكامل بالعربية والإنجليزية",
+      "contactFields": "يرجى إكمال البريد الإلكتروني وكلمة المرور ورقم الجوال",
+      "passwordRules": "كلمة المرور يجب أن تكون 8 أحرف على الأقل وتشمل حرفاً كبيراً وحرفاً صغيراً ورقماً.",
+      "technicianSpecsUnavailable": "لا يمكن تسجيل فني دون قائمة التخصصات. اسحب للأسفل لإعادة المحاولة."
+    }
+  },
+  "web": {
+    "currencySuffix": "ل.س",
+    "footer": {
+      "rights": "جميع الحقوق محفوظة"
+    },
+    "nav": {
+      "customerDashboard": "لوحة التحكم",
+      "techAvailable": "الطلبات المتاحة",
+      "adminDashboard": "لوحة الإدارة",
+      "signOut": "تسجيل الخروج",
+      "signIn": "تسجيل الدخول",
+      "createAccount": "حساب جديد"
+    },
+    "dialog": {
+      "close": "إغلاق",
+      "alertTitle": "تنبيه",
+      "confirmTitle": "تأكيد",
+      "promptTitle": "إدخال",
+      "promptField": "إدخال",
+      "ok": "موافق",
+      "cancel": "إلغاء",
+      "inputLabel": "أدخل القيمة"
+    },
+    "status": {
+      "request": {
+        "pending": "قيد الانتظار",
+        "assigned": "تم التعيين",
+        "in_progress": "قيد التنفيذ",
+        "completed": "مكتمل",
+        "cancelled": "ملغي"
+      },
+      "payment": {
+        "pending": "قيد الانتظار",
+        "processing": "قيد المعالجة",
+        "completed": "مكتمل",
+        "refunded": "مسترجع"
+      }
+    },
+    "customerDashboard": {
+      "pageTitle": "UpKeep - لوحة التحكم",
+      "heading": "لوحة التحكم",
+      "newRequest": "طلب جديد",
+      "stats": {
+        "pending": "طلبات قيد الانتظار",
+        "inProgress": "طلبات قيد التنفيذ",
+        "completed": "طلبات مكتملة",
+        "cancelled": "طلبات ملغاة"
+      },
+      "statsCardTitle": "ملخص الطلبات",
+      "tableTitle": "طلبات الصيانة",
+      "colId": "رقم الطلب",
+      "colService": "نوع الخدمة",
+      "colCityDistrict": "المدينة / الحي",
+      "colTechnician": "الفني",
+      "colStatus": "الحالة",
+      "colPayment": "حالة الدفع",
+      "colDate": "التاريخ",
+      "colActions": "الإجراءات",
+      "unassigned": "لم يتم التعيين",
+      "newOffers": "{{count}} عرض/عروض جديدة",
+      "viewOffers": "عرض العروض",
+      "track": "تتبع",
+      "emptyTitle": "لا توجد طلبات حالياً",
+      "emptyHint": "قم بإنشاء طلب جديد للبدء"
+    },
+    "techDashboard": {
+      "pageTitle": "UpKeep - لوحة التحكم الفني",
+      "heading": "لوحة التحكم الفني",
+      "filterByStatus": "تصفية حسب الحالة",
+      "filterAll": "الكل",
+      "filterPending": "قيد الانتظار",
+      "filterInProgress": "قيد التنفيذ",
+      "filterCompleted": "مكتملة",
+      "stats": {
+        "available": "طلبات متاحة",
+        "inProgress": "طلبات قيد التنفيذ",
+        "paidInvoices": "فواتير مدفوعة",
+        "totalRevenue": "إجمالي الإيراد (ل.س)",
+        "monthlyRevenue": "إيراد هذا الشهر (ل.س)",
+        "avgJob": "متوسط قيمة العمل (ل.س)",
+        "avgRating": "متوسط التقييم",
+        "ratingsCount": "عدد التقييمات"
+      },
+      "statsCardTitle": "ملخص الأداء",
+      "monthlyCardTitle": "الإيراد الشهري (آخر 6 أشهر)",
+      "colMonth": "الشهر",
+      "colRevenue": "الإيراد",
+      "colChart": "تمثيل بصري",
+      "noInvoiceData": "لا توجد بيانات فواتير مدفوعة بعد.",
+      "availableSectionTitle": "الطلبات المتاحة",
+      "nearbyMobileHint": "للطلبات القريبة مرتبة حسب المسافة، استخدم تطبيق UpKeep على الجوال واسمح بالوصول إلى الموقع عند الطلب. هذه الصفحة تعرض المدينة والحي فقط.",
+      "locationFilterHelp": "تصفية الطلبات حسب المسافة من موقعك الحالي. اسمح للمتصفح باستخدام الموقع عند الطلب.",
+      "useMyLocation": "استخدم موقعي",
+      "clearLocationFilter": "إلغاء تصفية الموقع",
+      "radiusLabel": "نطاق البحث",
+      "radiusKm": "{{km}} كم",
+      "locationCapturing": "جاري تحديد موقعك…",
+      "locationOk": "عرض الطلبات القريبة",
+      "locationDenied": "تم رفض إذن الموقع",
+      "locationUnavailable": "تعذر الحصول على موقعك",
+      "colDistance": "المسافة",
+      "distanceKmValue": "{{km}} كم",
+      "distanceUnknown": "—",
+      "emptyNearbyHint": "لا توجد طلبات ضمن هذا النطاق. جرّب نطاقاً أوسع (25 / 50 / 100 كم) أو ألغِ التصفية.",
+      "colCustomer": "العميل",
+      "colDescription": "الوصف",
+      "colCityDistrict": "المدينة / الحي",
+      "colMapPin": "الموقع على الخريطة",
+      "mapPinYes": "محدد",
+      "mapPinNo": "بدون دبوس",
+      "colService": "الخدمة",
+      "editOffer": "تعديل العرض",
+      "submitOffer": "تقديم عرض",
+      "startWork": "بدء التنفيذ",
+      "complete": "إكمال",
+      "details": "تفاصيل",
+      "emptyTitle": "لا توجد طلبات متاحة حالياً",
+      "emptyHint": "سيتم إخطارك عند توفر طلبات جديدة",
+      "offerModalTitle": "تقديم عرض فني",
+      "offerAmountLabel": "المبلغ قبل الضريبة (ل.س)",
+      "offerNoteLabel": "ملاحظة للعميل (اختياري)",
+      "offerTaxHint": "سيتم حساب الضريبة تلقائياً حسب إعدادات النظام.",
+      "sendOffer": "إرسال العرض"
+    },
+    "techJs": {
+      "enterValidAmount": "يرجى إدخال مبلغ صالح",
+      "offerConfirm": "سيتم إرسال/تحديث العرض بمبلغ __AMOUNT__ ل.س، هل تريد المتابعة؟",
+      "sessionExpired": "انتهت الجلسة أو حدثت إعادة توجيه غير متوقعة. أعد تسجيل الدخول ثم حاول مرة أخرى.",
+      "offerSendFailed": "فشل إرسال العرض (HTTP __STATUS__)",
+      "offerSent": "تم إرسال العرض بنجاح",
+      "offerFailed": "تعذر إرسال العرض",
+      "offerUnexpectedError": "حدث خطأ غير متوقع أثناء إرسال العرض",
+      "startExecutionConfirm": "هل تريد بدء تنفيذ الطلب الآن؟",
+      "startExecutionFailed": "تعذر بدء التنفيذ",
+      "startExecutionError": "حدث خطأ أثناء بدء التنفيذ",
+      "completeConfirm": "هل أنت متأكد من إكمال هذا الطلب؟",
+      "completeFailed": "تعذر إكمال الطلب",
+      "completeError": "حدث خطأ أثناء إكمال الطلب"
+    },
+    "profilePage": {
+      "pageTitle": "UpKeep - الملف الشخصي",
+      "avatarAlt": "الصورة الشخصية",
+      "editProfileButton": "تعديل الملف الشخصي",
+      "contactHeading": "معلومات الاتصال",
+      "memberSince": "عضو منذ {{date}}",
+      "editFormTitle": "تعديل الملف الشخصي",
+      "fieldNameAr": "الاسم بالعربية",
+      "fieldNameEn": "الاسم بالإنجليزية",
+      "fieldPhone": "رقم الهاتف",
+      "fieldCityOptional": "المدينة (اختياري)",
+      "fieldDistrictOptional": "المنطقة (اختياري)",
+      "fieldBioOptional": "نبذة مختصرة (اختياري)",
+      "fieldProfilePhotoOptional": "الصورة الشخصية (اختياري)",
+      "photoFormatsHint": "الصيغ المسموحة: PNG/JPG/JPEG/WEBP - الحجم الأقصى 2MB",
+      "fieldSpecialization": "التخصص",
+      "fieldCurrentPassword": "كلمة المرور الحالية",
+      "passwordLeaveBlankHint": "اترك حقول كلمة المرور فارغة إذا لم ترغب في التغيير",
+      "fieldNewPassword": "كلمة المرور الجديدة",
+      "newPasswordRulesHint": "يجب أن تحتوي على 8 أحرف على الأقل، حرف كبير، حرف صغير، ورقم.",
+      "fieldConfirmPassword": "تأكيد كلمة المرور الجديدة",
+      "cancel": "إلغاء",
+      "saveChanges": "حفظ التغييرات",
+      "statsCustomerTitle": "إحصائيات الطلبات",
+      "statsTotalOrders": "إجمالي الطلبات",
+      "statsCompletedOrders": "طلبات مكتملة",
+      "statsPendingOrders": "طلبات قيد الانتظار",
+      "statsTechTitle": "إحصائيات الأعمال",
+      "statsSpecialization": "التخصص",
+      "statsCompletedJobs": "أعمال مكتملة",
+      "statsAvgRating": "متوسط التقييم",
+      "statsTotalRevenue": "إجمالي الإيراد ({{currency}})",
+      "statsRatingsCount": "عدد التقييمات",
+      "unspecifiedSpec": "غير محدد",
+      "portfolio": {
+        "heading": "معرض الأعمال",
+        "manageHint": "يظهر حتى {{max}} صورة في ملفك العام (ضمن سياق الطلب). بحد أقصى {{mb}} ميغابايت لكل صورة.",
+        "limitReached": "وصلت إلى الحد الأقصى لعناصر المعرض.",
+        "addTitle": "إضافة صورة للمعرض",
+        "fieldImage": "الصورة",
+        "fieldCaption": "وصف قصير",
+        "fieldCategory": "تصنيف أو وسوم (اختياري)",
+        "fieldWorkDate": "تاريخ العمل (اختياري)",
+        "submitAdd": "إضافة للمعرض",
+        "emptyOwner": "أضف أول صورة لمشاريعك ليعرضها العملاء.",
+        "moveUp": "تحريك لأعلى",
+        "moveDown": "تحريك لأسفل",
+        "delete": "حذف",
+        "deleteConfirm": "إزالة هذا العنصر من المعرض؟"
+      },
+      "js": {
+        "currentPasswordRequired": "للتغيير، أدخل كلمة المرور الحالية أولاً",
+        "passwordsMismatch": "كلمة المرور الجديدة غير متطابقة",
+        "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+        "passwordComplexity": "كلمة المرور الجديدة يجب أن تحتوي حرفاً كبيراً وصغيراً ورقماً",
+        "imageTypeUnsupported": "صيغة الصورة غير مدعومة. استخدم PNG/JPG/JPEG/WEBP",
+        "imageTooLarge": "حجم الصورة أكبر من 2MB"
+      }
+    },
+    "createRequest": {
+      "pageTitle": "UpKeep - طلب خدمة جديد",
+      "heading": "طلب خدمة جديد",
+      "serviceType": "نوع الخدمة",
+      "selectService": "اختر نوع الخدمة",
+      "problemDescription": "وصف المشكلة",
+      "descriptionPlaceholder": "اكتب وصفاً تفصيلياً للمشكلة...",
+      "descriptionHelp": "يرجى وصف المشكلة بشكل واضح ودقيق لمساعدة الفني في فهم احتياجاتك",
+      "location": "تفاصيل الموقع",
+      "cityPlaceholder": "المدينة",
+      "districtPlaceholder": "الحي",
+      "addressPlaceholder": "العنوان التفصيلي",
+      "mapPinHelp": "اسحب الدبوس إلى موقع الخدمة بدقة",
+      "mapPinRequired": "يُرجى تحديد موقع الخدمة على الخريطة",
+      "mapPinInvalid": "موقع الدبوس غير صالح. انقل الدبوس أو استخدم موقعك مرة أخرى.",
+      "useMyLocation": "استخدم موقعي",
+      "locationCapturing": "جاري تحديد موقعك…",
+      "locationSetOk": "تم تحديد الموقع",
+      "locationDenied": "تم رفض الإذن",
+      "locationUnavailable": "تعذر تحديد موقعك. أعد المحاولة أو حدّد الموقع على الخريطة.",
+      "preferredTime": "الوقت",
+      "selectTime": "اختر الوقت",
+      "timeMorning": "صباحاً (9:00 - 12:00)",
+      "timeAfternoon": "ظهراً (12:00 - 3:00)",
+      "timeEvening": "مساءً (3:00 - 6:00)",
+      "extraNotes": "ملاحظات إضافية",
+      "notesPlaceholder": "أي معلومات إضافية ترغب في إضافتها...",
+      "attachment": "صورة أو فيديو للمشكلة (اختياري)",
+      "attachmentHelp": "صيغ مدعومة: صور (PNG, JPG, WEBP…) أو فيديو (MP4, MOV, WEBM) — حتى 25 ميجابايت",
+      "termsLead": "أوافق على ",
+      "termsLink": "الشروط والأحكام",
+      "submit": "إرسال الطلب",
+      "cancel": "إلغاء",
+      "validationDescription": "يرجى كتابة وصف أكثر تفصيلاً للمشكلة (20 حرف على الأقل)"
+    },
+    "trackRequest": {
+      "pageTitle": "UpKeep — تتبع الطلب #{{id}}",
+      "detailHeading": "تفاصيل الطلب #{{id}}",
+      "serviceType": "نوع الخدمة:",
+      "createdAt": "تاريخ الطلب:",
+      "completedAt": "تاريخ الإكمال:",
+      "requestStatus": "حالة الطلب:",
+      "paymentStatus": "حالة الدفع:",
+      "problemDescription": "وصف المشكلة:",
+      "serviceLocation": "موقع الخدمة",
+      "city": "المدينة",
+      "neighborhood": "الحي",
+      "streetAddress": "العنوان التفصيلي",
+      "addressHiddenPending": "العنوان التفصيلي مخفي حتى يتم إسناد الطلب إليك.",
+      "distanceAway": "على بعد {{km}} كم",
+      "showOnMap": "عرض على الخريطة",
+      "mapPreviewLabel": "موقع الخدمة على الخريطة",
+      "openInMaps": "فتح في خرائط Google",
+      "openAreaInMaps": "فتح المنطقة في الخرائط",
+      "attachmentHeading": "مرفق من العميل:",
+      "attachmentAlt": "مرفق الطلب",
+      "technicianInfo": "معلومات الفني:",
+      "timelineHeading": "مسار الطلب",
+      "timelineCreated": "تم إنشاء الطلب",
+      "techOfferCard": "تقديم عرضك على الطلب",
+      "yourCurrentOffer": "عرضك الحالي:",
+      "inclTax": "شامل الضريبة",
+      "offerState": "الحالة:",
+      "updateOffer": "تحديث العرض",
+      "sendOfferBtn": "إرسال العرض",
+      "customerOffersHeading": "عروض الفنيين",
+      "priceBeforeTax": "السعر قبل الضريبة:",
+      "taxLine": "الضريبة ({{rate}}%):",
+      "totalLine": "الإجمالي:",
+      "offerStatusLabel": "حالة العرض:",
+      "chooseOffer": "اختيار هذا العرض",
+      "noOffers": "لا توجد عروض حالياً لهذا الطلب.",
+      "offersPollHint": "إذا كنت تنتظر عروضاً من الفنيين، ستُحدَّث الصفحة تلقائياً خلال ثوانٍ عند وصول عرض جديد.",
+      "invoiceCardHeading": "الفاتورة الضريبية",
+      "invoiceNumber": "رقم الفاتورة:",
+      "subtotal": "المبلغ قبل الضريبة:",
+      "taxAmount": "الضريبة ({{rate}}%):",
+      "grandTotal": "الإجمالي:",
+      "invoicePaymentStatus": "حالة الدفع:",
+      "issuedAt": "تاريخ الإصدار:",
+      "viewInvoice": "عرض/طباعة الفاتورة",
+      "paymentHeading": "الدفع",
+      "paymentHint": "أثناء التنفيذ يدفع العميل المبلغ المتفق عليه (شامل الضريبة). بعد اكتمال الدفع يستطيع الفني ضغط «إكمال العمل»، ثم يظهر التقييم للعميل.",
+      "cardNumber": "رقم البطاقة",
+      "expiry": "تاريخ الانتهاء",
+      "cvv": "CVV",
+      "completePayment": "إتمام الدفع",
+      "rateTechnicianHeading": "تقييم الفني",
+      "ratingLabel": "التقييم (1-5)",
+      "rating5": "5 - ممتاز",
+      "rating4": "4 - جيد جداً",
+      "rating3": "3 - جيد",
+      "rating2": "2 - مقبول",
+      "rating1": "1 - ضعيف",
+      "commentLabel": "تعليق (اختياري)",
+      "submitRating": "إرسال التقييم",
+      "yourRatingHeading": "تقييمك",
+      "scoreLine": "الدرجة:",
+      "noComment": "بدون تعليق",
+      "actionsHeading": "الإجراءات",
+      "completeWork": "إكمال العمل",
+      "openInvoiceAdmin": "فتح فاتورة الطلب في مركز الإدارة",
+      "backToDashboard": "العودة للوحة التحكم",
+      "technicianFallback": "فني #{{id}}"
+    },
+    "timeline": {
+      "createdByCustomer": "تم إنشاء الطلب من قبل العميل",
+      "offerSent": "تم إرسال/تحديث عرض من الفني {{name}}",
+      "offerChosen": "اختار العميل عرضاً بمبلغ {{amount}} {{currency}}",
+      "workStarted": "بدأ الفني تنفيذ الطلب (المبلغ المتفق عليه: {{amount}} {{currency}})",
+      "workCompleted": "تم إكمال العمل من قبل الفني",
+      "paymentDone": "تم الدفع بنجاح بقيمة {{amount}} {{currency}} وتم إصدار فاتورة ضريبية",
+      "ratingAdded": "أضاف العميل تقييماً للفني ({{stars}}/5)"
+    },
+    "publicProfile": {
+      "pageTitle": "الملف — الطلب #{{id}}",
+      "heading": "ملف المشارك",
+      "backToRequest": "العودة للطلب",
+      "bio": "نبذة",
+      "specialization": "التخصص",
+      "rating": "التقييم",
+      "phone": "الجوال",
+      "cityArea": "المدينة / الحي",
+      "portfolioHeading": "معرض الأعمال",
+      "portfolioEmpty": "لا توجد صور في المعرض بعد.",
+      "portfolioOpen": "فتح الصورة",
+      "portfolioPrev": "السابق",
+      "portfolioNext": "التالي",
+      "portfolioClose": "إغلاق",
+      "portfolioCaption": "الوصف"
+    },
+    "trackJs": {
+      "confirmPayment": "هل أنت متأكد من إتمام عملية الدفع؟",
+      "paymentRecordedSuccess": "تم تسجيل الدفع بنجاح",
+      "invalidPaymentCard": "يرجى إدخال رقم بطاقة مكوّن من 16 رقماً.",
+      "invalidPaymentExpiry": "يرجى إدخال تاريخ الانتهاء بصيغة شهر/سنة (مثال: 12/26).",
+      "invalidPaymentCvv": "يرجى إدخال رمز الأمان (3 أو 4 أرقام).",
+      "paymentFailed": "فشلت عملية الدفع",
+      "paymentError": "حدث خطأ أثناء عملية الدفع",
+      "completeConfirm": "هل أنت متأكد من إكمال هذا الطلب؟",
+      "completeFailed": "تعذر إكمال الطلب",
+      "completeError": "حدث خطأ أثناء إكمال الطلب",
+      "chooseOfferConfirm": "هل تريد اختيار هذا العرض وتعيين الفني؟",
+      "chooseOfferFailed": "تعذر اختيار العرض",
+      "chooseOfferError": "حدث خطأ أثناء اختيار العرض",
+      "enterValidAmount": "يرجى إدخال مبلغ صالح",
+      "sendOfferConfirm": "هل تريد إرسال هذا العرض الآن؟",
+      "offerSent": "تم إرسال العرض بنجاح",
+      "offerFailed": "تعذر إرسال العرض",
+      "offerError": "حدث خطأ أثناء إرسال العرض",
+      "submitRatingConfirm": "هل تريد إرسال التقييم الآن؟",
+      "ratingFailed": "تعذر إرسال التقييم",
+      "ratingError": "حدث خطأ أثناء إرسال التقييم"
+    },
+    "invoicePage": {
+      "pageTitle": "UpKeep — الفاتورة {{number}}",
+      "taxInvoice": "فاتورة ضريبية",
+      "tagline": "منصة UpKeep - صيانة منزلية",
+      "issuedAt": "تاريخ الإصدار:",
+      "customerBlock": "بيانات العميل",
+      "serviceBlock": "بيانات الخدمة",
+      "requestRef": "طلب رقم: #{{id}}",
+      "colItem": "البند",
+      "colTaxRate": "نسبة الضريبة",
+      "colAmount": "القيمة ({{currency}})",
+      "rowService": "تكلفة الخدمة قبل الضريبة",
+      "rowVat": "ضريبة القيمة المضافة",
+      "rowTotal": "الإجمالي النهائي",
+      "paymentStatus": "حالة الدفع:",
+      "demoNote": "هذه الفاتورة صالحة للاستخدام المحلي (localhost demo).",
+      "print": "طباعة الفاتورة",
+      "backToRequest": "العودة للطلب"
+    },
+    "invoicePayment": {
+      "paid": "مدفوعة",
+      "pending": "بانتظار الدفع",
+      "failed": "فشلت",
+      "refunded": "مسترجعة"
+    },
+    "admin": {
+      "title": "لوحة الإدارة",
+      "nav": {
+        "stats": "إحصائيات",
+        "users": "المستخدمين",
+        "requests": "الطلبات",
+        "invoices": "الفواتير",
+        "settings": "الإعدادات",
+        "specs": "التخصصات",
+        "logs": "السجل",
+        "back": "رجوع"
+      },
+      "dashboard": {
+        "heading": "إحصائيات النظام",
+        "totalRequests": "عدد الطلبات",
+        "users": "المستخدمون",
+        "completed": "مكتملة",
+        "pending": "معلقة",
+        "avgTechRating": "متوسط تقييم الفنيين",
+        "totalRatings": "إجمالي التقييمات",
+        "revenueCardTitle": "إحصائيات إيرادات الفنيين (الفواتير المدفوعة)",
+        "colTechnician": "الفني",
+        "colPaidCount": "عدد الفواتير المدفوعة",
+        "colTotalRevenue": "إجمالي الإيراد ({{currency}})",
+        "colAvgJob": "متوسط قيمة العمل ({{currency}})",
+        "colMonthly": "إيراد الشهر الحالي ({{currency}})",
+        "colAvgRating": "متوسط التقييم",
+        "colRatingsCount": "عدد التقييمات",
+        "noTechData": "لا يوجد فنيون أو بيانات فواتير مدفوعة بعد.",
+        "chartCompletedJobs": "طلبات مكتملة"
+      },
+      "invoices": {
+        "title": "مركز التحكم بالفواتير",
+        "exportCsv": "تصدير CSV",
+        "filtersTitle": "تصفية الفواتير",
+        "fromDate": "من تاريخ",
+        "toDate": "إلى تاريخ",
+        "paymentStatus": "حالة الدفع",
+        "technician": "الفني",
+        "customer": "العميل",
+        "requestId": "رقم الطلب",
+        "apply": "تطبيق الفلاتر",
+        "reset": "إعادة ضبط",
+        "subtotalSum": "إجمالي قبل الضريبة",
+        "taxSum": "إجمالي الضريبة المحصلة",
+        "grandSum": "الإجمالي الكلي",
+        "listTitle": "قائمة الفواتير",
+        "colInvoiceNum": "رقم الفاتورة",
+        "colIssued": "تاريخ الإصدار",
+        "colRequest": "رقم الطلب",
+        "colCustomer": "العميل",
+        "colTechnician": "الفني",
+        "colStatus": "الحالة",
+        "colPreTax": "قبل الضريبة",
+        "colTax": "الضريبة",
+        "colTotal": "الإجمالي",
+        "unassigned": "غير معيّن",
+        "empty": "لا توجد فواتير مطابقة للفلاتر الحالية.",
+        "filterAll": "الكل",
+        "filterPending": "بانتظار الدفع",
+        "filterPaid": "مدفوعة",
+        "filterFailed": "فاشلة",
+        "filterRefunded": "مسترجعة"
+      },
+      "requests": {
+        "title": "كل الطلبات",
+        "filterAllStatus": "جميع الحالات",
+        "loadFailed": "تعذر تحميل الطلبات",
+        "colId": "ID",
+        "colCustomer": "العميل",
+        "colTechnician": "الفني",
+        "colService": "الخدمة",
+        "colStatus": "الحالة",
+        "colCreated": "تاريخ الإنشاء"
+      },
+      "users": {
+        "title": "المستخدمون",
+        "colName": "الاسم",
+        "colEmail": "البريد",
+        "colPhone": "رقم الجوال",
+        "colRole": "الدور",
+        "colActions": "إجراءات",
+        "delete": "حذف",
+        "loadFailed": "حدث خطأ أثناء جلب المستخدمين",
+        "confirmDelete": "تأكيد حذف المستخدم؟",
+        "deleteFailed": "فشل الحذف",
+        "unexpected": "خطأ غير متوقع"
+      },
+      "specs": {
+        "title": "التخصصات",
+        "placeholderAr": "الاسم بالعربية",
+        "placeholderEn": "English name",
+        "add": "إضافة",
+        "colArabic": "عربي",
+        "colEnglish": "English",
+        "delete": "حذف",
+        "fillFields": "املأ الحقول",
+        "confirmDelete": "تأكيد الحذف؟",
+        "deleteFailed": "فشل الحذف",
+        "unexpected": "خطأ غير متوقع"
+      },
+      "settings": {
+        "title": "الإعدادات",
+        "backupTitle": "نسخ احتياطي لقاعدة البيانات",
+        "backupText": "اضغط على الزر لإنشاء نسخة احتياطية فورية لقاعدة البيانات.",
+        "backupBtn": "إنشاء نسخة احتياطية",
+        "restoreTitle": "استعادة قاعدة البيانات",
+        "restoreText": "اختر ملف النسخة الاحتياطية (SQL) ثم اضغط على استعادة.",
+        "restoreBtn": "استعادة النسخة",
+        "backupOk": "تم إنشاء النسخة بنجاح:",
+        "backupFailed": "فشل النسخ الاحتياطي",
+        "pickFile": "يرجى اختيار ملف نسخة احتياطية",
+        "restoreOk": "تمت الاستعادة بنجاح",
+        "restoreFailed": "فشل الاستعادة",
+        "unexpected": "خطأ غير متوقع"
+      },
+      "logs": {
+        "title": "سجل التدقيق",
+        "colAdmin": "المسؤول",
+        "colAction": "الإجراء",
+        "colTarget": "الهدف",
+        "colTime": "الوقت"
+      }
+    },
+    "auth": {
+      "tagline": "نظام إدارة طلبات الصيانة",
+      "login": {
+        "pageTitle": "UpKeep — تسجيل الدخول",
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور",
+        "remember": "تذكرني",
+        "forgot": "نسيت كلمة المرور؟",
+        "submit": "تسجيل الدخول",
+        "divider": "أو",
+        "google": "سجل الدخول باستخدام Google",
+        "footerPrompt": "ليس لديك حساب؟",
+        "footerLink": "أنشئ حساب جديد"
+      },
+      "signup": {
+        "pageTitle": "UpKeep — إنشاء حساب جديد",
+        "fullNameAr": "الاسم الكامل (عربي)",
+        "fullNameEn": "الاسم الكامل (إنجليزي)",
+        "phone": "رقم الهاتف",
+        "accountType": "نوع الحساب",
+        "selectAccountType": "اختر نوع الحساب",
+        "specialization": "التخصص",
+        "selectSpec": "اختر التخصص",
+        "passwordHintTitle": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل وتحتوي على:",
+        "passwordUpper": "• حرف كبير واحد على الأقل",
+        "passwordLower": "• حرف صغير واحد على الأقل",
+        "passwordDigit": "• رقم واحد على الأقل",
+        "submit": "إنشاء حساب",
+        "hasAccount": "لديك حساب بالفعل؟",
+        "loginLink": "تسجيل الدخول",
+        "strength0": "ضعيف جداً",
+        "strength1": "ضعيف",
+        "strength2": "متوسط",
+        "strength3": "قوي",
+        "strength4": "قوي جداً",
+        "errInvalidEmail": "الرجاء إدخال بريد إلكتروني صحيح",
+        "errWeakPassword": "الرجاء اختيار كلمة مرور أقوى",
+        "errArabicName": "الاسم العربي يجب أن يحتوي على أحرف عربية فقط",
+        "errEnglishName": "الاسم الإنجليزي يجب أن يحتوي على أحرف لاتينية فقط",
+        "errPhone": "الرجاء إدخال رقم هاتف سوري صحيح يبدأ بـ 09",
+        "errAccountType": "يرجى اختيار نوع الحساب",
+        "errSpec": "يرجى اختيار التخصص للفني"
+      },
+      "forgot": {
+        "pageTitle": "UpKeep — استعادة كلمة المرور",
+        "subtitle": "إعادة تعيين كلمة المرور",
+        "intro": "أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور",
+        "email": "البريد الإلكتروني",
+        "submit": "إرسال رابط إعادة التعيين",
+        "backLogin": "العودة لتسجيل الدخول",
+        "remember": "تذكرت كلمة المرور؟",
+        "signIn": "سجل دخولك"
+      }
+    },
+    "errorPages": {
+      "403": {
+        "title": "الوصول مرفوض",
+        "body": "ليس لديك صلاحية لعرض هذه الصفحة.",
+        "home": "الرئيسية",
+        "back": "العودة"
+      },
+      "404": {
+        "title": "الصفحة غير موجودة",
+        "body": "عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
+        "home": "العودة للرئيسية",
+        "back": "العودة للصفحة السابقة"
+      },
+      "500": {
+        "title": "حدث خطأ",
+        "body": "عذراً، حدث خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً.",
+        "home": "العودة للرئيسية",
+        "back": "العودة للصفحة السابقة",
+        "reload": "إعادة تحميل الصفحة"
+      }
+    },
+    "errors": {
+      "403": "الوصول مرفوض",
+      "404": "الصفحة غير موجودة",
+      "500": "حدث خطأ"
+    }
+  },
+  "labels": {
+    "requestStatusLong": {
+      "pending": "معلق — بانتظار العروض",
+      "assigned": "مسند لفني",
+      "in_progress": "جاري التنفيذ",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
+    },
+    "requestStatusShort": {
+      "pending": "معلق",
+      "assigned": "مسند",
+      "in_progress": "جاري",
+      "completed": "مكتمل",
+      "cancelled": "ملغى"
+    },
+    "paymentStatus": {
+      "pending": "بانتظار الدفع",
+      "processing": "قيد المعالجة",
+      "completed": "تم الدفع",
+      "paid": "مدفوعة",
+      "failed": "فشل",
+      "refunded": "مسترد"
+    },
+    "offerStatus": {
+      "pending": "قيد المراجعة",
+      "accepted": "مقبول",
+      "rejected": "مرفوض"
+    },
+    "role": {
+      "customer": "عميل",
+      "technician": "فني",
+      "admin": "مسؤول"
+    },
+    "paymentMethod": {
+      "credit_card": "بطاقة ائتمان",
+      "debit_card": "بطاقة خصم",
+      "bank_transfer": "تحويل بنكي",
+      "cash": "نقداً",
+      "apple_pay": "Apple Pay",
+      "google_pay": "Google Pay",
+      "mada": "مدى",
+      "stc_pay": "STC Pay",
+      "wallet": "محفظة"
+    }
+  },
+  "home": {
+    "menu": {
+      "openSettings": "فتح قائمة الإعدادات",
+      "dismiss": "إغلاق"
+    },
+    "quickGuideTitle": "دليل سريع",
+    "quickGuideBody": "أ) عميل: طلباتي ← طلب معلّق ← العروض ← «اختيار هذا العرض». فنّي: لوحة الفني ← عرض سعر.\n\nب) بعد اختيار العرض: الفاتورة ← «إتمام الدفع» عندما يكون الدفع مكتملاً.\n\nج) فنّي: «إكمال العمل». عميل: تقييم بالنجوم.\n\nتفاصيل الحساب من أيقونة الملف الشخصي في الأعلى.",
+    "quickGuideA11y": "دليل سريع",
+    "loadFailed": "تعذر تحميل الطلبات",
+    "techHintAssigned": "مسند إليك",
+    "techHintOpen": "مفتوح — يمكن تقديم عرض",
+    "requestA11y": "طلب رقم {{id}}",
+    "techRequestA11y": "طلب فني رقم {{id}}",
+    "paymentPrefix": "الدفع:",
+    "offersCount": "عروض: {{count}}",
+    "offersPendingDetail": "عروض معلّقة على الطلب: {{count}}",
+    "myRequests": "طلباتي",
+    "a11yOpenMyRequests": "فتح طلباتي",
+    "newRequest": "طلب جديد",
+    "a11yCreateRequest": "إنشاء طلب جديد",
+    "techBoard": "لوحة الفني",
+    "a11yTechBoard": "فتح لوحة الفني",
+    "adminBoard": "الإدارة",
+    "a11yAdminBoard": "فتح لوحة الإدارة",
+    "loading": "جاري تحميل الطلبات…",
+    "sectionFollowUp": "متابعة طلباتك",
+    "followUpHintTitle": "متابعة طلباتك",
+    "followUpHintAdmin": "أحدث الطلبات في النظام — اضغط الصف لفتح تفاصيل الطلب كما في «طلباتي».",
+    "followUpHintCustomer": "حالة الطلب والدفع في لمحة — اضغط الصف لفتح التفاصيل كما في «طلباتي».",
+    "a11yFollowSection": "معلومات قسم متابعة الطلبات",
+    "emptyPreviewTitle": "لا توجد طلبات للعرض هنا",
+    "emptyPreviewHint": "انتقل إلى «طلباتي» أو أنشئ طلباً جديداً، أو اسحب للتحديث.",
+    "seeAllMyRequests": "عرض الكل في طلباتي",
+    "a11ySeeAllMyRequests": "عرض كل الطلبات في طلباتي",
+    "sectionAvailable": "طلبات متاحة — تقديم عرض",
+    "availableHintTitle": "طلبات متاحة — تقديم عرض",
+    "availableHintAdmin": "طلبات معلّقة بلا فني مسند — نظرة عامة للمسؤول.",
+    "availableHintTech": "طلبات مفتوحة ضمن تخصصك يمكنك تقديم عرض سعر لها.",
+    "a11yAvailableSection": "معلومات قسم الطلبات المتاحة",
+    "emptyAvailableTitle": "لا توجد طلبات متاحة حالياً",
+    "emptyAvailableHint": "جرّب لوحة الفني أو اسحب للتحديث.",
+    "seeAllTech": "عرض الكل في لوحة الفني",
+    "sectionActiveAdmin": "طلبات قيد التنفيذ (مسندة)",
+    "sectionActiveTech": "طلباتك النشطة",
+    "activeHintTitleAdmin": "طلبات قيد التنفيذ (مسندة)",
+    "activeHintTitleTech": "طلباتك النشطة",
+    "activeHintAdmin": "طلبات بحالة مسند أو جاري في النظام.",
+    "activeHintTech": "طلبات مسندة إليك لمتابعة التنفيذ والتحديث من التفاصيل.",
+    "a11yActiveSection": "معلومات قسم الطلبات النشطة",
+    "emptyActiveAdmin": "لا توجد طلبات قيد التنفيذ",
+    "emptyActiveTech": "لا توجد طلبات نشطة",
+    "emptyActiveHint": "عند قبول عمل أو الإسناد ستظهر هنا. اسحب للتحديث.",
+    "btnGoMyRequests": "انتقال إلى طلباتي",
+    "btnCreateService": "إنشاء طلب خدمة",
+    "btnGoTechBoard": "انتقال إلى لوحة الفني",
+    "btnGoAdmin": "انتقال إلى لوحة الإدارة",
+    "nameFallbackCustomer": "عميل #{{id}}",
+    "nameFallbackUser": "مستخدم #{{id}}"
+  },
+  "format": {
+    "currency": "{{amount}} ل.س"
+  },
+  "requestTimeline": {
+    "meta": "{{date}} · {{status}}"
+  },
+  "requestDetail": {
+    "city": "المدينة",
+    "neighborhood": "الحي",
+    "streetAddress": "العنوان التفصيلي"
+  },
+  "requestDetailScreen": {
+    "addressHiddenPending": "العنوان التفصيلي مخفي حتى يتم إسناد الطلب إليك.",
+    "mapPreviewLabel": "موقع الخدمة على الخريطة",
+    "showOnMap": "عرض على الخريطة",
+    "hideMap": "إخفاء الخريطة",
+    "openInMaps": "فتح في الخرائط",
+    "openAreaInMaps": "فتح المنطقة في الخرائط",
+    "customerInfo": "بيانات العميل",
+    "customerPhone": "هاتف العميل",
+    "customerCityProfile": "المدينة / الحي (الملف)",
+    "offersHeading": "عروض الأسعار",
+    "allOffersHeading": "جميع العروض",
+    "offersEmpty": "لا توجد عروض بعد.",
+    "invoicePeekTitle": "الفاتورة (للاطلاع)",
+    "trackStatusTitle": "متابعة الحالة",
+    "shareInvoice": "عرض / مشاركة الفاتورة",
+    "invoiceModalTitle": "الفاتورة",
+    "invoiceModalHint": "التحقق من صيغة رقم الفاتورة:",
+    "invoiceFormatOk": "صحيح",
+    "invoiceFormatCheck": "راجع الرقم",
+    "sharePrint": "مشاركة / طباعة (نظام)",
+    "close": "إغلاق",
+    "shareInvoiceTitle": "فاتورة UpKeep",
+    "fields": {
+      "requestId": "رقم الطلب",
+      "status": "حالة الطلب",
+      "paymentStatus": "حالة الدفع",
+      "serviceType": "نوع الخدمة",
+      "serviceSpecId": "معرّف التخصص",
+      "serviceNameAr": "اسم الخدمة (عربي)",
+      "serviceNameEn": "اسم الخدمة (إنجليزي)",
+      "serviceMissing": "لا توجد بيانات خدمة",
+      "description": "الوصف",
+      "preferredDate": "التاريخ المفضل",
+      "preferredTime": "الوقت المفضل",
+      "notes": "ملاحظات",
+      "createdAt": "تاريخ الإنشاء",
+      "completedAt": "تاريخ الإكمال",
+      "technicianId": "معرّف الفني",
+      "customerId": "معرّف العميل",
+      "trackStatus": "متابعة الحالة",
+      "trackPaymentStatus": "حالة الدفع (متابعة)",
+      "offersCount": "عدد العروض",
+      "offersAmountSum": "مجموع العروض"
+    },
+    "invoice": {
+      "title": "الفاتورة",
+      "invoiceId": "رقم الفاتورة (معرّف)",
+      "requestId": "رقم الطلب",
+      "offerId": "رقم العرض",
+      "invoiceNumber": "رقم الفاتورة",
+      "subtotal": "المجموع قبل الضريبة",
+      "taxRate": "نسبة الضريبة",
+      "taxAmount": "مبلغ الضريبة",
+      "total": "الإجمالي",
+      "paymentStatus": "حالة الدفع على الفاتورة",
+      "issuedAt": "تاريخ الإصدار"
+    },
+    "invoiceShare": {
+      "header": "UpKeep — فاتورة ضريبية",
+      "invoiceNumber": "رقم الفاتورة",
+      "subtotal": "المجموع قبل الضريبة",
+      "taxRate": "نسبة الضريبة %",
+      "taxAmount": "مبلغ الضريبة",
+      "total": "الإجمالي",
+      "paymentStatus": "حالة الدفع على الفاتورة",
+      "issuedAt": "تاريخ الإصدار"
+    },
+    "payment": {
+      "sectionTitle": "آخر عملية دفع",
+      "paymentId": "رقم الدفع",
+      "amount": "المبلغ",
+      "method": "طريقة الدفع",
+      "status": "الحالة",
+      "transactionId": "رقم المعاملة",
+      "createdAt": "تاريخ الإنشاء"
+    },
+    "rating": {
+      "title": "التقييم",
+      "ratingId": "رقم التقييم",
+      "stars": "النجوم",
+      "comment": "التعليق",
+      "createdAt": "تاريخ الإنشاء"
+    },
+    "offer": {
+      "displayTitle": "عرض سعر #{{id}}",
+      "technician": "الفني",
+      "specialization": "التخصص",
+      "techPhone": "هاتف الفني",
+      "cityDistrict": "المدينة / الحي",
+      "bio": "نبذة",
+      "amountBeforeTax": "المبلغ قبل الضريبة",
+      "taxWithRate": "الضريبة ({{rate}}٪)",
+      "total": "الإجمالي",
+      "status": "الحالة",
+      "techNote": "ملاحظة الفني",
+      "offerDate": "تاريخ العرض",
+      "ratingNone": "متوسط التقييم: لا تقييمات بعد",
+      "ratingLine": "متوسط التقييم: {{avg}} ★ ({{ratingsCount}} تقييم)",
+      "chooseThis": "اختيار هذا العرض"
+    }
+  },
+  "technicianRequests": {
+    "specBanner": "التخصص: {{spec}}",
+    "bannerHint": "طلبات مفتوحة ضمن تخصصك والطلبات المسندة إليك — صفِّ حسب الحالة أو اسحب القائمة للتحديث.",
+    "techHintOpenSpecialty": "مفتوح — تخصصك"
+  },
+  "adminInvoices": {
+    "title": "فواتير الإدارة",
+    "subtotal": "قبل الضريبة",
+    "tax": "الضريبة",
+    "grandTotal": "الإجمالي",
+    "filters": "تصفية",
+    "exportCsvTitle": "تصدير CSV",
+    "exportOpenFailed": "تعذر فتح رابط التصدير.",
+    "loadFailed": "تعذر تحميل الفواتير",
+    "openExport": "فتح تصدير CSV",
+    "loading": "جاري تحميل الفواتير...",
+    "noMatches": "لا توجد فواتير مطابقة للفلاتر.",
+    "requestLine": "طلب #{{id}}",
+    "customerLine": "العميل: {{name}}",
+    "technicianLine": "الفني: {{name}}",
+    "technicianUnassigned": "غير معيّن",
+    "dateLine": "التاريخ: {{date}}",
+    "amountLine": "الإجمالي: {{total}} (ضريبة: {{tax}})",
+    "phRequestId": "رقم الطلب (اختياري)",
+    "phCustomerId": "معرّف العميل (اختياري)",
+    "phTechnicianId": "معرّف الفني (اختياري)"
+  },
+  "location": {
+    "permission": "اسمح بالوصول إلى الموقع لعرض الطلبات القريبة والمسافة.",
+    "denied": "تم رفض إذن الموقع. فعّله من إعدادات الجهاز لاستخدام الطلبات القريبة.",
+    "unavailable": "تعذر تحديد موقعك. تحقق من تفعيل خدمات الموقع."
+  },
+  "apiErrors": {
+    "hostNotSet": "عنوان الخادم غير مضبوط. راجع إعدادات التطبيق ثم أعد التشغيل.",
+    "hostInvalid": "عنوان الخادم غير صالح. راجع EXPO_PUBLIC_API_URL في ملف .env.",
+    "notLoggedIn": "غير مسجل",
+    "sessionExpired": "انتهت الجلسة"
+  },
+  "network": {
+    "unreachable": "تعذر الاتصال بالخادم. تحقق من الشبكة ومن أن الخادم يعمل."
+  }
+}

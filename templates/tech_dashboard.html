@@ -1,0 +1,622 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t('web.techDashboard.pageTitle') }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 px-md-4">
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>{{ t('web.techDashboard.heading') }}</h2>
+            <div class="btn-group">
+                <button type="button" 
+                        class="btn btn-primary dropdown-toggle" 
+                        data-bs-toggle="dropdown">
+                    <i class="fas fa-filter me-1"></i>
+                    {{ t('web.techDashboard.filterByStatus') }}
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('tech_dashboard') }}">
+                            {{ t('web.techDashboard.filterAll') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('tech_dashboard', status='pending') }}">
+                            {{ t('web.techDashboard.filterPending') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('tech_dashboard', status='in_progress') }}">
+                            {{ t('web.techDashboard.filterInProgress') }}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('tech_dashboard', status='completed') }}">
+                            {{ t('web.techDashboard.filterCompleted') }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Job Statistics -->
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.techDashboard.statsCardTitle') }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3 g-md-4">
+            <div class="col-sm-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ requests|selectattr('status', 'equalto', 'pending')|list|length }}</h3>
+                        <p class="mb-0">{{ t('web.techDashboard.stats.available') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ requests|selectattr('status', 'equalto', 'in_progress')|list|length }}</h3>
+                        <p class="mb-0">{{ t('web.techDashboard.stats.inProgress') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ paid_invoices_count }}</h3>
+                        <p class="mb-0">{{ t('web.techDashboard.stats.paidInvoices') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ total_revenue }}</h3>
+                        <p class="mb-0">{{ t('web.techDashboard.stats.totalRevenue') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-dark text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ monthly_revenue }}</h3>
+                        <p class="mb-0">{{ t('web.techDashboard.stats.monthlyRevenue') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-secondary text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ avg_job_value }}</h3>
+                        <p class="mb-0">{{ t('web.techDashboard.stats.avgJob') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-secondary text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ avg_rating if avg_rating is not none else '—' }}</h3>
+                        <p class="mb-0">{{ t('web.techDashboard.stats.avgRating') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <h3>{{ ratings_count }}</h3>
+                        <p class="mb-0">{{ t('web.techDashboard.stats.ratingsCount') }}</p>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.techDashboard.monthlyCardTitle') }}</h5>
+            </div>
+            <div class="card-body">
+                {% if monthly_labels %}
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th>{{ t('web.techDashboard.colMonth') }}</th>
+                                <th>{{ t('web.techDashboard.colRevenue') }}</th>
+                                <th style="width: 45%;">{{ t('web.techDashboard.colChart') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set max_val = (monthly_values|max) if monthly_values else 1 %}
+                            {% for i in range(monthly_labels|length) %}
+                            {% set value = monthly_values[i] %}
+                            <tr>
+                                <td>{{ monthly_labels[i] }}</td>
+                                <td>{{ value }} {{ t('web.currencySuffix') }}</td>
+                                <td>
+                                    {% set width = ((value / max_val) * 100) if max_val else 0 %}
+                                    <div class="progress" style="height: 10px;">
+                                        <div class="progress-bar bg-primary" style="width: {{ width }}%"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted mb-0">{{ t('web.techDashboard.noInvoiceData') }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Available Jobs -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ t('web.techDashboard.availableSectionTitle') }}</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="px-3 pt-3 pb-2 border-bottom bg-light">
+                    <p class="small text-muted mb-2">{{ t('web.techDashboard.locationFilterHelp') }}</p>
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm" id="techUseMyLocationBtn">
+                            <i class="fas fa-location-arrow me-1"></i>
+                            {{ t('web.techDashboard.useMyLocation') }}
+                        </button>
+                        <span class="small text-muted" id="techGeoStatus" aria-live="polite"></span>
+                        {% if geo_active %}
+                        <a href="{{ url_for('tech_dashboard', status=status_filter) if status_filter else url_for('tech_dashboard') }}"
+                           class="btn btn-outline-secondary btn-sm">
+                            {{ t('web.techDashboard.clearLocationFilter') }}
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="btn-group btn-group-sm flex-wrap mb-0" role="group" aria-label="{{ t('web.techDashboard.radiusLabel') }}">
+                        {% for r in [25, 50, 100] %}
+                        <button type="button"
+                                class="btn {% if geo_active and radius_km|int == r %}btn-primary{% else %}btn-outline-secondary{% endif %} tech-radius-btn"
+                                data-radius="{{ r }}">
+                            {{ t('web.techDashboard.radiusKm', km=r) }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if requests %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>{{ t('web.customerDashboard.colId') }}</th>
+                                <th>{{ t('web.techDashboard.colCustomer') }}</th>
+                                <th>{{ t('web.techDashboard.colDescription') }}</th>
+                                <th>{{ t('web.techDashboard.colCityDistrict') }}</th>
+                                <th>{{ t('web.techDashboard.colMapPin') }}</th>
+                                {% if geo_active %}
+                                <th>{{ t('web.techDashboard.colDistance') }}</th>
+                                {% endif %}
+                                <th>{{ t('web.techDashboard.colService') }}</th>
+                                <th>{{ t('web.customerDashboard.colStatus') }}</th>
+                                <th>{{ t('web.customerDashboard.colPayment') }}</th>
+                                <th>{{ t('web.customerDashboard.colDate') }}</th>
+                                <th>{{ t('web.customerDashboard.colActions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in requests %}
+                            <tr>
+                                <td>#{{ request.request_id }}</td>
+                                <td>
+                                    <a href="{{ url_for('request_public_profile', request_id=request.request_id, user_id=request.customer.user_id) }}"
+                                       class="d-inline-flex align-items-center gap-2 text-decoration-none">
+                                        {% if request.customer.profile_image %}
+                                        <img src="{{ url_for('static', filename=request.customer.profile_image) }}"
+                                             alt=""
+                                             class="rounded-circle border flex-shrink-0"
+                                             width="32" height="32"
+                                             style="object-fit: cover;">
+                                        {% else %}
+                                        <span class="text-secondary flex-shrink-0 d-inline-flex align-items-center justify-content-center" aria-hidden="true" style="font-size:32px;line-height:1;">
+                                            <i class="fas fa-user-circle"></i>
+                                        </span>
+                                        {% endif %}
+                                        <span>{{ user_label(request.customer) }}</span>
+                                    </a>
+                                </td>
+                                <td>{{ request.description[:50] }}...</td>
+                                <td class="align-middle small">
+                                    {% if request.city or request.district %}
+                                    {{ request.city or '—' }} — {{ request.district or '—' }}
+                                    {% else %}
+                                    <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle">
+                                    {% if request.latitude is not none and request.longitude is not none %}
+                                    <span class="badge text-bg-success">{{ t('web.techDashboard.mapPinYes') }}</span>
+                                    {% else %}
+                                    <span class="badge text-bg-secondary">{{ t('web.techDashboard.mapPinNo') }}</span>
+                                    {% endif %}
+                                </td>
+                                {% if geo_active %}
+                                <td class="align-middle small">
+                                    {% set dist = request_distances.get(request.request_id) %}
+                                    {% if dist is not none %}
+                                    <span class="text-primary fw-semibold">{{ t('web.techDashboard.distanceKmValue', km=dist) }}</span>
+                                    {% else %}
+                                    <span class="text-muted">{{ t('web.techDashboard.distanceUnknown') }}</span>
+                                    {% endif %}
+                                </td>
+                                {% endif %}
+                                <td>{{ service_label(request.service) }}</td>
+                                <td>
+                                    {% set status_classes = {
+                                        'pending': 'bg-warning',
+                                        'assigned': 'bg-info',
+                                        'in_progress': 'bg-primary',
+                                        'completed': 'bg-success',
+                                        'cancelled': 'bg-danger'
+                                    } %}
+                                    <span class="badge {{ status_classes[request.status] }}">
+                                        {{ t('web.status.request.' ~ request.status) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% set payment_classes = {
+                                        'pending': 'bg-warning',
+                                        'processing': 'bg-info',
+                                        'completed': 'bg-success',
+                                        'refunded': 'bg-danger'
+                                    } %}
+                                    <span class="badge {{ payment_classes[request.payment_status] }}">
+                                        {{ t('web.status.payment.' ~ request.payment_status) }}
+                                    </span>
+                                </td>
+                                <td>{{ request.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>
+                                    {% if request.status == 'pending' %}
+                                        {% if request.request_id in my_offer_ids %}
+                                        <button type="button" onclick="openOfferModal({{ request.request_id }})"
+                                                class="btn btn-sm btn-outline-success">
+                                            <i class="fas fa-pen"></i>
+                                            {{ t('web.techDashboard.editOffer') }}
+                                        </button>
+                                        {% else %}
+                                        <button type="button" onclick="openOfferModal({{ request.request_id }})"
+                                                class="btn btn-sm btn-success">
+                                            <i class="fas fa-hand-holding-usd"></i>
+                                            {{ t('web.techDashboard.submitOffer') }}
+                                        </button>
+                                        {% endif %}
+                                    {% elif request.status == 'assigned' and request.technician_id == current_user.user_id %}
+                                    <button type="button" onclick="startAssignedRequest({{ request.request_id }})"
+                                            class="btn btn-sm btn-success">
+                                        <i class="fas fa-play"></i>
+                                        {{ t('web.techDashboard.startWork') }}
+                                    </button>
+                                    {% elif request.status == 'in_progress' %}
+                                    <button type="button" onclick="completeRequest({{ request.request_id }})"
+                                            class="btn btn-sm btn-primary">
+                                        <i class="fas fa-check-double"></i>
+                                        {{ t('web.techDashboard.complete') }}
+                                    </button>
+                                    {% endif %}
+                                    <a href="{{ url_for('track', id=request.request_id, lat=tech_lat, lng=tech_lng) if geo_active and tech_lat is not none else url_for('track', id=request.request_id) }}"
+                                       class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i>
+                                        {{ t('web.techDashboard.details') }}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+                    <h5>{{ t('web.techDashboard.emptyTitle') }}</h5>
+                    <p class="text-muted">
+                        {% if geo_active %}
+                        {{ t('web.techDashboard.emptyNearbyHint') }}
+                        {% else %}
+                        {{ t('web.techDashboard.emptyHint') }}
+                        {% endif %}
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="offerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ t('web.techDashboard.offerModalTitle') }}</h5>
+                <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="{{ t('web.dialog.close') }}"></button>
+            </div>
+            <form id="offerForm">
+                <div class="modal-body">
+                    <input type="hidden" id="offerRequestId">
+                    <div class="mb-3">
+                        <label for="offerAmount" class="form-label">{{ t('web.techDashboard.offerAmountLabel') }}</label>
+                        <input type="number" step="0.01" min="1" class="form-control" id="offerAmount" required>
+                    </div>
+                    <div class="mb-0">
+                        <label for="offerNote" class="form-label">{{ t('web.techDashboard.offerNoteLabel') }}</label>
+                        <textarea class="form-control" id="offerNote" rows="3" maxlength="500"></textarea>
+                    </div>
+                    <p class="small text-muted mt-3 mb-0">
+                        {{ t('web.techDashboard.offerTaxHint') }}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ t('web.dialog.cancel') }}</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-paper-plane me-1"></i>
+                        {{ t('web.techDashboard.sendOffer') }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="application/json" id="tech-dashboard-i18n">
+{{ {
+  'enterValidAmount': t('web.techJs.enterValidAmount'),
+  'offerConfirm': t('web.techJs.offerConfirm'),
+  'sessionExpired': t('web.techJs.sessionExpired'),
+  'offerSendFailed': t('web.techJs.offerSendFailed'),
+  'offerSent': t('web.techJs.offerSent'),
+  'offerFailed': t('web.techJs.offerFailed'),
+  'offerUnexpectedError': t('web.techJs.offerUnexpectedError'),
+  'startExecutionConfirm': t('web.techJs.startExecutionConfirm'),
+  'startExecutionFailed': t('web.techJs.startExecutionFailed'),
+  'startExecutionError': t('web.techJs.startExecutionError'),
+  'completeConfirm': t('web.techJs.completeConfirm'),
+  'completeFailed': t('web.techJs.completeFailed'),
+  'completeError': t('web.techJs.completeError')
+}|tojson }}
+</script>
+<script>
+function appAlert(message) {
+    if (typeof window.showAppAlert === 'function') return window.showAppAlert(message);
+    window.alert(message);
+    return Promise.resolve();
+}
+
+function appConfirm(message) {
+    if (typeof window.showAppConfirm === 'function') return window.showAppConfirm(message);
+    return Promise.resolve(window.confirm(message));
+}
+
+function appPrompt(message, options = {}) {
+    if (typeof window.showAppPrompt === 'function') return window.showAppPrompt(message, options);
+    const value = window.prompt(message, options.defaultValue || '');
+    return Promise.resolve(value);
+}
+
+const TECH_I18N = JSON.parse(document.getElementById('tech-dashboard-i18n').textContent);
+
+const TECH_GEO = {
+    statusFilter: {{ status_filter|tojson }},
+    techLat: {{ tech_lat|tojson }},
+    techLng: {{ tech_lng|tojson }},
+    radiusKm: {{ radius_km|tojson }},
+    capturing: {{ t('web.techDashboard.locationCapturing')|tojson }},
+    locationOk: {{ t('web.techDashboard.locationOk')|tojson }},
+    locationDenied: {{ t('web.techDashboard.locationDenied')|tojson }},
+    locationUnavailable: {{ t('web.techDashboard.locationUnavailable')|tojson }},
+};
+
+function techDashboardBasePath() {
+    if (TECH_GEO.statusFilter) {
+        return '/tech/' + encodeURIComponent(TECH_GEO.statusFilter);
+    }
+    return '/tech';
+}
+
+function navigateTechDashboardWithGeo(lat, lng, radiusKm) {
+    const params = new URLSearchParams();
+    params.set('lat', String(Number(lat).toFixed(5)));
+    params.set('lng', String(Number(lng).toFixed(5)));
+    params.set('radius_km', String(radiusKm));
+    params.set('sort', 'distance');
+    window.location.href = techDashboardBasePath() + '?' + params.toString();
+}
+
+(function initTechGeoFilter() {
+    const statusEl = document.getElementById('techGeoStatus');
+    const useBtn = document.getElementById('techUseMyLocationBtn');
+    if (!useBtn) return;
+
+    function setStatus(msg) {
+        if (statusEl) statusEl.textContent = msg || '';
+    }
+
+    if (TECH_GEO.techLat != null && TECH_GEO.techLng != null) {
+        setStatus(TECH_GEO.locationOk);
+    }
+
+    useBtn.addEventListener('click', function () {
+        if (!navigator.geolocation) {
+            setStatus(TECH_GEO.locationUnavailable);
+            return;
+        }
+        setStatus(TECH_GEO.capturing);
+        navigator.geolocation.getCurrentPosition(
+            function (pos) {
+                navigateTechDashboardWithGeo(
+                    pos.coords.latitude,
+                    pos.coords.longitude,
+                    TECH_GEO.radiusKm || 50
+                );
+            },
+            function (err) {
+                if (err && err.code === 1) {
+                    setStatus(TECH_GEO.locationDenied);
+                } else {
+                    setStatus(TECH_GEO.locationUnavailable);
+                }
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+        );
+    });
+
+    document.querySelectorAll('.tech-radius-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const radius = parseInt(btn.getAttribute('data-radius'), 10) || 50;
+            if (TECH_GEO.techLat != null && TECH_GEO.techLng != null) {
+                navigateTechDashboardWithGeo(TECH_GEO.techLat, TECH_GEO.techLng, radius);
+                return;
+            }
+            if (!navigator.geolocation) {
+                setStatus(TECH_GEO.locationUnavailable);
+                return;
+            }
+            setStatus(TECH_GEO.capturing);
+            navigator.geolocation.getCurrentPosition(
+                function (pos) {
+                    navigateTechDashboardWithGeo(pos.coords.latitude, pos.coords.longitude, radius);
+                },
+                function () {
+                    setStatus(TECH_GEO.locationDenied);
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+            );
+        });
+    });
+})();
+
+let offerModalInstance = null;
+
+function openOfferModal(requestId) {
+    const requestInput = document.getElementById('offerRequestId');
+    const amountInput = document.getElementById('offerAmount');
+    const noteInput = document.getElementById('offerNote');
+    requestInput.value = requestId;
+    amountInput.value = '';
+    noteInput.value = '';
+    if (!offerModalInstance) {
+        offerModalInstance = new bootstrap.Modal(document.getElementById('offerModal'));
+    }
+    offerModalInstance.show();
+}
+
+async function submitOfferForm(event) {
+    event.preventDefault();
+    try {
+        const requestId = document.getElementById('offerRequestId').value;
+        const amount = parseFloat(String(document.getElementById('offerAmount').value || ''));
+        const noteResolved = document.getElementById('offerNote').value || '';
+        if (isNaN(amount) || amount <= 0) {
+            await appAlert(TECH_I18N.enterValidAmount);
+            return;
+        }
+        const confirmMsg = TECH_I18N.offerConfirm.replace('__AMOUNT__', String(amount));
+        if (!(await appConfirm(confirmMsg))) {
+            return;
+        }
+
+        const payload = {
+            amount,
+            note: noteResolved || ''
+        };
+
+        const response = await fetch(`/tech/offer/${requestId}`, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify(payload)
+        });
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+            await response.text();
+            throw new Error(TECH_I18N.sessionExpired);
+        }
+        const data = await response.json();
+        if (!response.ok) {
+            const msg = (data && data.message) ? data.message : TECH_I18N.offerSendFailed.replace('__STATUS__', String(response.status));
+            throw new Error(msg);
+        }
+        if (data.success) {
+            await appAlert(data.message || TECH_I18N.offerSent);
+            if (offerModalInstance) offerModalInstance.hide();
+            location.reload();
+        } else {
+            await appAlert(data.message || TECH_I18N.offerFailed);
+        }
+    } catch (error) {
+        await appAlert(error.message || TECH_I18N.offerUnexpectedError);
+    }
+}
+
+document.getElementById('offerForm').addEventListener('submit', submitOfferForm);
+
+async function startAssignedRequest(requestId) {
+    if (!(await showAppConfirm(TECH_I18N.startExecutionConfirm))) return;
+    fetch(`/tech/accept/${requestId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(async data => {
+        if (data.success) {
+            await showAppAlert(data.message);
+            location.reload();
+        } else {
+            await showAppAlert(data.message || TECH_I18N.startExecutionFailed);
+        }
+    })
+    .catch(async () => {
+        await showAppAlert(TECH_I18N.startExecutionError);
+    });
+}
+
+async function completeRequest(requestId) {
+    if (await showAppConfirm(TECH_I18N.completeConfirm)) {
+        fetch(`/tech/complete/${requestId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(async data => {
+            if (data.success) {
+                await showAppAlert(data.message);
+                location.reload();
+            } else {
+                await showAppAlert(data.message || TECH_I18N.completeFailed);
+            }
+        })
+        .catch(async () => {
+            await showAppAlert(TECH_I18N.completeError);
+        });
+    }
+}
+</script>
+{% endblock %}

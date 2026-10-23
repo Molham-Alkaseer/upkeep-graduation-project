@@ -1,0 +1,558 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Major screen smoke snapshots renders LanguageSettingsScreen 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "transparent",
+      "flex": 1,
+      "padding": 24,
+      "paddingBottom": 40,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#475569",
+        "fontFamily": "Tajawal_400Regular",
+        "fontSize": 15,
+        "marginBottom": 8,
+        "textAlign": "start",
+      }
+    }
+  >
+    settings.languageDescription
+  </Text>
+  <Text
+    style={
+      {
+        "color": "#64748b",
+        "fontFamily": "Tajawal_400Regular",
+        "fontSize": 13,
+        "marginBottom": 20,
+        "textAlign": "start",
+      }
+    }
+  >
+    settings.hint
+  </Text>
+  <View
+    style={
+      {
+        "backgroundColor": "#ffffff",
+        "borderColor": "rgba(37, 99, 235, 0.1)",
+        "borderRadius": 16,
+        "borderWidth": 1,
+        "overflow": "hidden",
+        "shadowColor": "#0f172a",
+        "shadowOffset": {
+          "height": 8,
+          "width": 0,
+        },
+        "shadowOpacity": 0.08,
+        "shadowRadius": 24,
+      }
+    }
+  >
+    <View
+      accessibilityLabel="settings.english. settings.selected"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": true,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "minHeight": 56,
+            "paddingHorizontal": 18,
+            "paddingVertical": 16,
+          },
+          {
+            "backgroundColor": "rgba(37, 99, 235, 0.06)",
+          },
+          false,
+        ]
+      }
+      testID="lang-option-en"
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#0f172a",
+              "flex": 1,
+              "fontFamily": "Tajawal_700Bold",
+              "fontSize": 16,
+              "textAlign": "start",
+            },
+            {
+              "color": "#1d4ed8",
+            },
+          ]
+        }
+      >
+        settings.english
+      </Text>
+      <Text>
+        icon:checkmark-circle
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "#dbe3ef",
+          "height": 0.5,
+          "marginHorizontal": 18,
+        }
+      }
+    />
+    <View
+      accessibilityLabel="settings.arabic. settings.applyLanguage"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "minHeight": 56,
+            "paddingHorizontal": 18,
+            "paddingVertical": 16,
+          },
+          false,
+          false,
+        ]
+      }
+      testID="lang-option-ar"
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#0f172a",
+              "flex": 1,
+              "fontFamily": "Tajawal_700Bold",
+              "fontSize": 16,
+              "textAlign": "start",
+            },
+            false,
+          ]
+        }
+      >
+        settings.arabic
+      </Text>
+      <View
+        style={
+          {
+            "height": 22,
+            "width": 22,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Major screen smoke snapshots renders LoginScreen 1`] = `
+<View>
+  <View
+    style={{}}
+  >
+    <View />
+    <View
+      style={{}}
+    >
+      <Text
+        style={{}}
+      >
+        <Text>
+          icon:mail-outline
+        </Text>
+         
+        login.form.email.label
+      </Text>
+      <TextInput
+        accessibilityLabel="login.a11y.emailField"
+        autoCapitalize="none"
+        keyboardType="email-address"
+        onChangeText={[Function]}
+        placeholder="login.form.email.placeholder"
+        placeholderTextColor="#64748b"
+        style={
+          [
+            {},
+            {
+              "textAlign": "start",
+            },
+          ]
+        }
+        value=""
+      />
+    </View>
+    <View
+      style={{}}
+    >
+      <Text
+        style={{}}
+      >
+        <Text>
+          icon:lock-closed-outline
+        </Text>
+         
+        login.form.password.label
+      </Text>
+      <TextInput
+        accessibilityLabel="login.a11y.passwordField"
+        onChangeText={[Function]}
+        placeholder="login.form.password.placeholder"
+        placeholderTextColor="#64748b"
+        secureTextEntry={true}
+        style={
+          [
+            {},
+            {
+              "textAlign": "start",
+            },
+          ]
+        }
+        value=""
+      />
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "marginBottom": 8,
+          "marginTop": -4,
+        }
+      }
+    >
+      <View
+        accessibilityLabel="login.a11y.remember"
+        accessibilityRole="checkbox"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": false,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "gap": 8,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#ffffff",
+                "borderColor": "#dbe3ef",
+                "borderRadius": 6,
+                "borderWidth": 2,
+                "height": 22,
+                "justifyContent": "center",
+                "width": 22,
+              },
+              false,
+            ]
+          }
+        />
+        <Text
+          style={
+            {
+              "color": "#0f172a",
+              "fontFamily": "Tajawal_400Regular",
+              "fontSize": 14,
+            }
+          }
+        >
+          login.form.remember.label
+        </Text>
+      </View>
+      <View
+        accessibilityLabel="login.a11y.forgot"
+        accessibilityRole="link"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <Text
+          style={
+            {
+              "color": "#2563eb",
+              "fontFamily": "Tajawal_400Regular",
+              "fontSize": 14,
+            }
+          }
+        >
+          login.form.forgot.link
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <Text>
+        login.form.submit.label
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "gap": 10,
+          "marginVertical": 18,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#dbe3ef",
+            "flex": 1,
+            "height": 0.5,
+          }
+        }
+      />
+      <Text
+        style={
+          {
+            "color": "#64748b",
+            "fontFamily": "Tajawal_400Regular",
+            "fontSize": 13,
+          }
+        }
+      >
+        login.divider.or
+      </Text>
+      <View
+        style={
+          {
+            "backgroundColor": "#dbe3ef",
+            "flex": 1,
+            "height": 0.5,
+          }
+        }
+      />
+    </View>
+    <View
+      accessibilityLabel="login.a11y.google"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "rgba(220, 53, 69, 0.04)",
+          "borderColor": "#dc3545",
+          "borderRadius": 12,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text>
+        icon:logo-google
+      </Text>
+      <Text
+        style={
+          {
+            "color": "#dc3545",
+            "fontFamily": "Tajawal_700Bold",
+            "fontSize": 15,
+            "fontWeight": "600",
+          }
+        }
+      >
+         
+        login.oauth.google.label
+      </Text>
+    </View>
+    <Text
+      style={{}}
+    >
+      login.footer.noAccount
+       
+      <Text
+        onPress={[Function]}
+        style={{}}
+      >
+        login.footer.registerLink
+      </Text>
+    </Text>
+  </View>
+</View>
+`;
